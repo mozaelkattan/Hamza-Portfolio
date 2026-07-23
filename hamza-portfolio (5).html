@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1420">
+<meta name="robots" content="index, follow">
+<title>Hamza — Video Editor & Motion Designer</title>
+<meta name="description" content="Hamza — Video Editor & Motion Designer. Cinematic editing, motion graphics and color grading for brands, creators and companies.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hamza — Video Editor & Motion Designer">
+<meta property="og:description" content="Cinematic editing, motion graphics and color grading for brands, creators and companies.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Hamza — Video Editor & Motion Designer">
+<meta name="twitter:description" content="Cinematic editing, motion graphics and color grading for brands, creators and companies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json" id="ldJson">
+{"@context":"https://schema.org","@type":"Person","name":"Hamza","jobTitle":"Video Editor & Motion Designer","description":"Cinematic editing, motion graphics and color grading for brands, creators and companies."}
+</script>
+<style>
+:root{
+  --navy-deep:#060b12;
+  --navy:#0a1420;
+  --navy-soft:#0e1b2b;
+  --turq:#18d6cb;
+  --turq-dim:#14a89f;
+  --teal:#0d8c8a;
+  --teal-deep:#0a5d60;
+  --white:#f4f8fa;
+  --gray:#8fa1ad;
+  --gray-dim:#5c6e79;
+  --glass:rgba(244,248,250,0.045);
+  --glass-brd:rgba(244,248,250,0.09);
+  --radius:18px;
+  --ease:cubic-bezier(.16,.8,.24,1);
+  --font-display:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  --font-body:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;
+  font-size:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--navy-deep);
+  color:var(--white);
+  font-family:var(--font-body);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;scroll-behavior:auto !important;}
+}
+.mono{font-family:'Roboto Mono',ui-monospace,monospace;}
+::selection{background:var(--turq);color:var(--navy-deep);}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+img{max-width:100%;display:block;}
+::-webkit-scrollbar{width:10px;}
+::-webkit-scrollbar-track{background:var(--navy-deep);}
+::-webkit-scrollbar-thumb{background:var(--teal-deep);border-radius:10px;}
+
+/* ---------- Loading screen ---------- */
+#loader{
+  position:fixed;inset:0;z-index:9999;background:var(--navy-deep);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+  transition:opacity .8s var(--ease), visibility .8s var(--ease);
+}
+#loader.hide{opacity:0;visibility:hidden;pointer-events:none;}
+.loader-mark{font-size:15px;letter-spacing:.35em;color:var(--turq);font-weight:600;}
+.loader-track{width:220px;height:2px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;position:relative;}
+.loader-fill{position:absolute;left:0;top:0;height:100%;width:0%;background:linear-gradient(90deg,var(--teal-deep),var(--turq));animation:loadfill 1.6s var(--ease) forwards;}
+@keyframes loadfill{to{width:100%;}}
+.loader-time{font-size:11px;color:var(--gray-dim);letter-spacing:.15em;}
+
+/* ---------- Cursor glow ---------- */
+#cursor-glow{
+  position:fixed;width:420px;height:420px;border-radius:50%;pointer-events:none;z-index:2;
+  background:radial-gradient(circle,rgba(20,214,203,.06),transparent 70%);
+  transform:translate(-50%,-50%);transition:opacity .3s;left:-500px;top:-500px;
+}
+@media (hover:none){#cursor-glow{display:none;}}
+
+/* ---------- Nav ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:20px clamp(20px,5vw,64px);
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(6,11,18,0.45);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
+  border-bottom:1px solid transparent;
+  transition:border-color .4s;
+}
+header.scrolled{border-bottom-color:var(--glass-brd);}
+.logo{font-weight:800;font-size:19px;letter-spacing:.02em;display:flex;align-items:center;gap:10px;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--turq);box-shadow:0 0 12px var(--turq);}
+nav.mainnav{display:flex;gap:36px;}
+nav.mainnav a{font-size:14px;color:var(--gray);font-weight:500;position:relative;padding:4px 0;transition:color .3s;}
+nav.mainnav a:hover{color:var(--white);}
+nav.mainnav a::after{content:'';position:absolute;left:0;bottom:-2px;width:0;height:1px;background:var(--turq);transition:width .3s var(--ease);}
+nav.mainnav a:hover::after{width:100%;}
+.header-actions{display:flex;align-items:center;gap:14px;}
+.btn-admin{
+  width:36px;height:36px;border-radius:10px;border:1px solid var(--glass-brd);background:var(--glass);
+  display:flex;align-items:center;justify-content:center;color:var(--gray);transition:all .3s;
+}
+.btn-admin:hover{color:var(--turq);border-color:var(--turq-dim);}
+.navtoggle{display:none;width:36px;height:36px;border:1px solid var(--glass-brd);border-radius:10px;background:var(--glass);align-items:center;justify-content:center;color:var(--white);}
+
+/* ---------- Buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-size:14px;font-weight:600;
+  border:1px solid transparent;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:linear-gradient(135deg,var(--turq),var(--teal-deep));color:#04191a;box-shadow:0 8px 30px -8px rgba(20,214,203,.5);}
+.btn-primary:hover{box-shadow:0 12px 40px -6px rgba(20,214,203,.7);transform:translateY(-2px);}
+.btn-ghost{border-color:var(--glass-brd);color:var(--white);background:var(--glass);backdrop-filter:blur(10px);}
+.btn-ghost:hover{border-color:var(--turq-dim);transform:translateY(-2px);}
+.btn-sm{padding:9px 16px;font-size:12.5px;}
+
+/* ---------- Hero ---------- */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:140px clamp(20px,5vw,64px) 80px;overflow:hidden;
+}
+.hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;}
+.hero-bg svg{position:absolute;inset:0;width:100%;height:100%;}
+.glow-a{position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(circle,rgba(20,214,203,.16),transparent 68%);top:-220px;left:-160px;filter:blur(10px);animation:driftA 22s ease-in-out infinite;}
+.glow-b{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(13,140,138,.18),transparent 68%);bottom:-200px;right:-140px;filter:blur(10px);animation:driftB 26s ease-in-out infinite;}
+@keyframes driftA{0%,100%{transform:translate(0,0);}50%{transform:translate(40px,60px);}}
+@keyframes driftB{0%,100%{transform:translate(0,0);}50%{transform:translate(-50px,-30px);}}
+.hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:60px;width:100%;max-width:1280px;margin:0 auto;align-items:center;}
+.eyebrow{
+  font-family:'Roboto Mono',monospace;font-size:12px;letter-spacing:.18em;color:var(--turq);
+  display:flex;align-items:center;gap:10px;margin-bottom:22px;opacity:0;animation:fadeUp .8s var(--ease) .1s forwards;
+}
+.eyebrow .diamond{width:6px;height:6px;background:var(--turq);transform:rotate(45deg);}
+h1.hero-name{
+  font-family:var(--font-display);
+  font-size:clamp(58px,9vw,124px);font-weight:800;line-height:.95;letter-spacing:-.03em;
+  opacity:0;animation:fadeUp .9s var(--ease) .22s forwards;
+}
+h1.hero-name span{
+  background:linear-gradient(120deg,var(--white) 40%,var(--turq));-webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.role-cycle{
+  height:38px;margin-top:14px;overflow:hidden;
+  opacity:0;animation:fadeUp .9s var(--ease) .34s forwards;
+}
+.role-cycle-inner{font-size:22px;font-weight:600;color:var(--gray);display:flex;flex-direction:column;transition:transform .6s var(--ease);}
+.role-cycle-inner span{height:38px;display:flex;align-items:center;}
+.role-cycle-inner span b{color:var(--turq);font-weight:600;}
+.hero-copy{
+  margin-top:26px;max-width:560px;font-size:16.5px;line-height:1.75;color:var(--gray);
+  opacity:0;animation:fadeUp .9s var(--ease) .46s forwards;
+}
+.hero-copy strong{color:var(--white);font-weight:600;}
+.hero-actions{display:flex;gap:16px;margin-top:38px;opacity:0;animation:fadeUp .9s var(--ease) .58s forwards;flex-wrap:wrap;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
+
+/* hero monitor / profile frame */
+.hero-visual{position:relative;opacity:0;animation:fadeUp 1s var(--ease) .5s forwards;}
+.monitor{
+  position:relative;border-radius:26px;padding:14px;
+  background:linear-gradient(160deg,var(--glass),rgba(244,248,250,.02));
+  border:1px solid var(--glass-brd);backdrop-filter:blur(20px);
+  box-shadow:0 40px 90px -30px rgba(0,0,0,.7);
+}
+.monitor-screen{
+  position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;
+  background:
+    radial-gradient(circle at 30% 20%,rgba(20,214,203,.14),transparent 55%),
+    linear-gradient(160deg,#0d1c2b,#050b12 75%);
+  display:flex;align-items:center;justify-content:center;
+}
+.avatar-slot{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative;
+  cursor:pointer;
+}
+.avatar-slot img{width:100%;height:100%;object-fit:cover;}
+.avatar-placeholder{
+  display:flex;flex-direction:column;align-items:center;gap:14px;color:var(--gray-dim);text-align:center;padding:20px;
+}
+.avatar-placeholder svg{opacity:.55;}
+.avatar-placeholder .lbl{font-size:12px;letter-spacing:.08em;font-family:'Roboto Mono',monospace;}
+.scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0px,rgba(255,255,255,.025) 1px,transparent 1px,transparent 3px);pointer-events:none;mix-blend-mode:overlay;}
+.rec-badge{
+  position:absolute;top:14px;left:14px;display:flex;align-items:center;gap:6px;
+  background:rgba(6,11,18,.55);backdrop-filter:blur(6px);padding:6px 10px;border-radius:100px;font-size:10.5px;font-family:'Roboto Mono',monospace;letter-spacing:.08em;
+}
+.rec-dot{width:6px;height:6px;border-radius:50%;background:#ff4d4d;animation:blink 1.6s infinite;}
+@keyframes blink{50%{opacity:.25;}}
+.monitor-timecode{display:flex;justify-content:space-between;align-items:center;padding:14px 8px 4px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--gray-dim);letter-spacing:.05em;}
+.monitor-waveform{display:flex;align-items:flex-end;gap:2px;height:26px;padding:0 8px 10px;}
+.monitor-waveform i{flex:1;background:linear-gradient(180deg,var(--turq),var(--teal-deep));border-radius:2px;opacity:.55;}
+.float-card{
+  position:absolute;background:rgba(9,17,27,.72);backdrop-filter:blur(16px);border:1px solid var(--glass-brd);
+  border-radius:14px;padding:12px 16px;font-size:12px;box-shadow:0 20px 40px -18px rgba(0,0,0,.6);
+}
+.float-card.fc1{top:8%;right:-8%;animation:floaty 6s ease-in-out infinite;}
+.float-card.fc2{bottom:6%;left:-10%;animation:floaty 7s ease-in-out infinite 1s;}
+@keyframes floaty{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.fc-title{font-weight:700;color:var(--white);}
+.fc-sub{color:var(--gray-dim);font-family:'Roboto Mono',monospace;font-size:10.5px;margin-top:2px;}
+
+.scroll-cue{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--gray-dim);opacity:0;animation:fadeUp 1s var(--ease) .9s forwards;}
+.scroll-cue .line{width:1px;height:34px;background:linear-gradient(var(--turq),transparent);animation:scrollline 2s ease-in-out infinite;}
+@keyframes scrollline{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+/* ---------- Section shell ---------- */
+section{padding:120px clamp(20px,5vw,64px);position:relative;scroll-margin-top:90px;}
+.section-inner{max-width:1280px;margin:0 auto;}
+.section-head{max-width:640px;margin-bottom:64px;}
+.section-eyebrow{font-family:'Roboto Mono',monospace;font-size:12px;letter-spacing:.16em;color:var(--turq);display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.section-eyebrow::before{content:'';width:22px;height:1px;background:var(--turq);}
+h2.section-title{font-family:var(--font-display);font-size:clamp(32px,4.4vw,52px);font-weight:800;letter-spacing:-.02em;line-height:1.08;}
+.section-desc{margin-top:16px;color:var(--gray);font-size:16px;line-height:1.7;}
+
+.reveal{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* timeline divider (signature element) */
+.timeline-rule{position:relative;height:34px;margin:0 auto 70px;max-width:1280px;display:flex;align-items:center;}
+.timeline-rule .ticks{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--glass-brd) 0 1px,transparent 1px 28px);position:relative;}
+.timeline-rule .playhead{width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:9px solid var(--turq);position:absolute;top:-9px;filter:drop-shadow(0 0 6px rgba(20,214,203,.6));animation:playmove 8s linear infinite;}
+@keyframes playmove{0%{left:0%;}100%{left:96%;}}
+
+/* ---------- About ---------- */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+.about-copy p{color:var(--gray);line-height:1.85;font-size:15.5px;margin-bottom:18px;}
+.about-copy p strong{color:var(--white);}
+.tag-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+.tag{padding:8px 14px;border:1px solid var(--glass-brd);border-radius:100px;font-size:12.5px;color:var(--gray);background:var(--glass);}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--glass-brd);border:1px solid var(--glass-brd);border-radius:var(--radius);overflow:hidden;}
+.stat-cell{background:var(--navy);padding:30px 24px;transition:background .3s;}
+.stat-cell:hover{background:var(--navy-soft);}
+.stat-num{font-size:38px;font-weight:800;letter-spacing:-.02em;background:linear-gradient(120deg,var(--white),var(--turq));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat-label{margin-top:8px;font-size:12.5px;color:var(--gray-dim);letter-spacing:.03em;}
+
+/* ---------- Portfolio ---------- */
+.cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px;}
+.cat-tab{padding:11px 20px;border-radius:100px;border:1px solid var(--glass-brd);background:var(--glass);font-size:13.5px;color:var(--gray);font-weight:600;transition:all .3s;display:flex;align-items:center;gap:8px;}
+.cat-tab .count{font-family:'Roboto Mono',monospace;font-size:10.5px;color:var(--gray-dim);}
+.cat-tab.active,.cat-tab:hover{color:var(--navy-deep);background:linear-gradient(120deg,var(--turq),var(--teal-deep));border-color:transparent;}
+.cat-tab.active .count,.cat-tab:hover .count{color:rgba(6,11,18,.6);}
+
+.project-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;}
+@media(max-width:980px){.project-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:640px){.project-grid{grid-template-columns:1fr;}}
+
+.pcard{
+  border-radius:16px;overflow:hidden;border:1px solid var(--glass-brd);background:var(--glass);
+  cursor:pointer;transition:transform .5s var(--ease),border-color .4s,box-shadow .5s var(--ease);
+  position:relative;
+}
+.pcard:hover{transform:translateY(-8px);border-color:var(--turq-dim);box-shadow:0 30px 60px -24px rgba(0,0,0,.7);}
+.pcard-thumb{
+  aspect-ratio:16/10;position:relative;overflow:hidden;
+  background:linear-gradient(150deg,#0e2130,#050b12 70%);
+}
+.pcard-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease);}
+.pcard:hover .pcard-thumb img{transform:scale(1.06);}
+.pcard-thumb .ph-graphic{position:absolute;inset:0;}
+.play-btn{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s;background:rgba(6,11,18,.35);
+}
+.pcard:hover .play-btn{opacity:1;}
+.play-circle{width:52px;height:52px;border-radius:50%;background:rgba(244,248,250,.14);backdrop-filter:blur(6px);border:1px solid rgba(244,248,250,.3);display:flex;align-items:center;justify-content:center;transform:scale(.85);transition:transform .35s var(--ease);}
+.pcard:hover .play-circle{transform:scale(1);}
+.pcard-body{padding:20px 20px 22px;}
+.pcard-title{font-size:16.5px;font-weight:700;margin-bottom:6px;}
+.pcard-desc{font-size:13px;color:var(--gray-dim);line-height:1.6;margin-bottom:14px;min-height:38px;}
+.pcard-meta{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gray-dim);font-family:'Roboto Mono',monospace;border-top:1px solid var(--glass-brd);padding-top:12px;}
+.empty-cat{padding:60px 20px;text-align:center;color:var(--gray-dim);border:1px dashed var(--glass-brd);border-radius:16px;font-size:14px;}
+
+/* ---------- Project detail overlay ---------- */
+.project-view{
+  position:fixed;inset:0;z-index:800;background:var(--navy-deep);overflow-y:auto;
+  transform:translateY(100%);transition:transform .55s var(--ease);
+}
+.project-view.open{transform:translateY(0);}
+.pv-inner{max-width:1100px;margin:0 auto;padding:110px clamp(20px,5vw,64px) 100px;}
+.pv-close{position:fixed;top:22px;right:clamp(20px,5vw,64px);z-index:20;}
+.pv-back{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--gray);margin-bottom:30px;}
+.pv-back:hover{color:var(--turq);}
+.pv-player{aspect-ratio:16/9;border-radius:18px;overflow:hidden;background:#000;border:1px solid var(--glass-brd);position:relative;box-shadow:0 40px 80px -30px rgba(0,0,0,.8);}
+.pv-player iframe,.pv-player video{width:100%;height:100%;border:0;}
+.pv-title{font-size:clamp(28px,4vw,42px);font-weight:800;margin-top:34px;letter-spacing:-.02em;}
+.pv-grid{display:grid;grid-template-columns:1fr 320px;gap:50px;margin-top:20px;}
+.pv-desc{color:var(--gray);line-height:1.8;font-size:15.5px;margin-top:16px;}
+.pv-side{display:flex;flex-direction:column;gap:2px;background:var(--glass-brd);border:1px solid var(--glass-brd);border-radius:14px;overflow:hidden;height:fit-content;}
+.pv-row{background:var(--navy);padding:16px 18px;}
+.pv-row .k{font-size:11px;color:var(--gray-dim);font-family:'Roboto Mono',monospace;letter-spacing:.06em;margin-bottom:4px;}
+.pv-row .v{font-size:14.5px;font-weight:600;}
+.pv-nav{display:flex;justify-content:space-between;margin-top:70px;border-top:1px solid var(--glass-brd);padding-top:30px;gap:20px;}
+.pv-nav-btn{flex:1;padding:18px;border-radius:14px;border:1px solid var(--glass-brd);background:var(--glass);transition:all .35s;}
+.pv-nav-btn:hover{border-color:var(--turq-dim);transform:translateY(-3px);}
+.pv-nav-btn .dir{font-size:11px;color:var(--gray-dim);font-family:'Roboto Mono',monospace;letter-spacing:.08em;margin-bottom:6px;}
+.pv-nav-btn.next{text-align:right;}
+.pv-nav-btn .t{font-weight:700;font-size:14.5px;}
+@media(max-width:800px){.pv-grid{grid-template-columns:1fr;}}
+
+/* ---------- Social / Connect ---------- */
+.connect-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:700px){.connect-grid{grid-template-columns:1fr;}}
+.connect-card{
+  padding:34px;border-radius:20px;border:1px solid var(--glass-brd);
+  background:linear-gradient(160deg,var(--glass),rgba(244,248,250,.015));
+  position:relative;overflow:hidden;transition:transform .45s var(--ease),border-color .4s;
+}
+.connect-card:hover{transform:translateY(-6px);border-color:var(--turq-dim);}
+.connect-card .glow{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(20,214,203,.16),transparent 70%);top:-90px;right:-90px;}
+.connect-icon{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--turq),var(--teal-deep));display:flex;align-items:center;justify-content:center;margin-bottom:22px;color:#04191a;}
+.connect-kicker{font-size:12px;color:var(--gray-dim);font-family:'Roboto Mono',monospace;letter-spacing:.08em;}
+.connect-name{font-size:20px;font-weight:700;margin-top:6px;}
+.connect-handle{color:var(--turq);font-size:13.5px;margin-top:6px;}
+.connect-arrow{position:absolute;bottom:28px;right:28px;width:36px;height:36px;border-radius:50%;border:1px solid var(--glass-brd);display:flex;align-items:center;justify-content:center;transition:all .35s;}
+.connect-card:hover .connect-arrow{background:var(--turq);border-color:var(--turq);color:#04191a;transform:rotate(45deg);}
+
+/* ---------- Contact ---------- */
+.contact-wrap{border-radius:26px;padding:clamp(36px,6vw,70px);position:relative;overflow:hidden;background:linear-gradient(160deg,var(--navy-soft),var(--navy-deep));border:1px solid var(--glass-brd);}
+.contact-wrap .glow{position:absolute;width:500px;height:500px;background:radial-gradient(circle,rgba(20,214,203,.14),transparent 70%);top:-200px;left:-150px;}
+.contact-top{max-width:600px;position:relative;z-index:1;}
+.contact-list{display:flex;flex-wrap:wrap;gap:16px;margin-top:40px;position:relative;z-index:1;}
+.contact-item{display:flex;align-items:center;gap:12px;padding:16px 22px;border-radius:14px;border:1px solid var(--glass-brd);background:rgba(6,11,18,.35);transition:all .3s;min-width:220px;}
+.contact-item:hover{border-color:var(--turq-dim);transform:translateY(-3px);}
+.contact-item .ci-icon{width:38px;height:38px;border-radius:10px;background:var(--glass);display:flex;align-items:center;justify-content:center;color:var(--turq);flex-shrink:0;}
+.contact-item .ci-k{font-size:10.5px;color:var(--gray);font-family:'Roboto Mono',monospace;letter-spacing:.06em;}
+.contact-item .ci-v{font-size:15px;font-weight:700;margin-top:3px;color:var(--white);}
+#contactDesc{color:var(--white);opacity:.85;}
+
+footer{padding:50px clamp(20px,5vw,64px) 40px;border-top:1px solid var(--glass-brd);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:var(--gray-dim);font-size:13px;}
+
+/* ---------- Admin panel ---------- */
+#admin-overlay{position:fixed;inset:0;background:rgba(4,8,13,.7);backdrop-filter:blur(4px);z-index:900;display:none;}
+#admin-overlay.open{display:block;}
+#admin-panel{
+  position:fixed;top:0;right:0;bottom:0;width:min(560px,100vw);background:var(--navy-soft);z-index:901;
+  border-left:1px solid var(--glass-brd);transform:translateX(100%);transition:transform .5s var(--ease);
+  display:flex;flex-direction:column;
+}
+#admin-panel.open{transform:translateX(0);}
+.admin-head{padding:22px 26px;border-bottom:1px solid var(--glass-brd);display:flex;justify-content:space-between;align-items:center;}
+.admin-head h3{font-size:16px;font-weight:700;}
+.admin-tabs{display:flex;gap:6px;padding:14px 26px 0;border-bottom:1px solid var(--glass-brd);}
+.atab{padding:10px 14px;font-size:12.5px;color:var(--gray-dim);border-bottom:2px solid transparent;font-weight:600;}
+.atab.active{color:var(--turq);border-color:var(--turq);}
+.admin-body{padding:22px 26px;overflow-y:auto;flex:1;}
+.admin-section{display:none;}
+.admin-section.active{display:block;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11.5px;color:var(--gray-dim);margin-bottom:6px;font-family:'Roboto Mono',monospace;letter-spacing:.04em;}
+.field input,.field textarea,.field select{
+  width:100%;padding:11px 13px;border-radius:10px;border:1px solid var(--glass-brd);background:rgba(6,11,18,.5);color:var(--white);font-size:13.5px;font-family:inherit;
+}
+.field textarea{resize:vertical;min-height:70px;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--turq-dim);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.admin-card{border:1px solid var(--glass-brd);border-radius:12px;padding:16px;margin-bottom:14px;background:rgba(6,11,18,.3);}
+.admin-card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.admin-card-head b{font-size:13.5px;}
+.icon-btn{width:28px;height:28px;border-radius:8px;border:1px solid var(--glass-brd);background:var(--glass);display:inline-flex;align-items:center;justify-content:center;color:var(--gray);}
+.icon-btn:hover{color:var(--turq);border-color:var(--turq-dim);}
+.icon-btn.danger:hover{color:#ff6b6b;border-color:#ff6b6b;}
+.admin-actions{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.thumb-preview{width:100%;aspect-ratio:16/9;border-radius:8px;background:#050b12;margin-bottom:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;border:1px dashed var(--glass-brd);}
+.thumb-preview img{width:100%;height:100%;object-fit:cover;}
+.drag-handle{cursor:grab;color:var(--gray-dim);font-size:16px;user-select:none;}
+.video-item{border:1px solid var(--glass-brd);border-radius:10px;padding:12px;margin-bottom:8px;background:rgba(6,11,18,.3);display:flex;gap:10px;align-items:center;}
+.video-item.dragging{opacity:.4;}
+.video-item .vi-thumb{width:56px;height:36px;border-radius:6px;overflow:hidden;background:#0d1c2b;flex-shrink:0;}
+.video-item .vi-thumb img{width:100%;height:100%;object-fit:cover;}
+.video-item .vi-info{flex:1;min-width:0;}
+.video-item .vi-title{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.video-item .vi-sub{font-size:10.5px;color:var(--gray-dim);}
+.small-note{font-size:11.5px;color:var(--gray-dim);line-height:1.6;margin-top:4px;}
+.save-toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--turq);color:#04191a;padding:12px 22px;border-radius:100px;font-size:13px;font-weight:700;z-index:1000;opacity:0;transition:all .4s var(--ease);pointer-events:none;}
+.save-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+.skip-link{position:fixed;top:-60px;left:12px;z-index:2000;background:var(--turq);color:#04191a;padding:12px 18px;border-radius:10px;font-weight:700;font-size:13px;transition:top .3s;}
+.skip-link:focus{top:12px;}
+.unlock-box{text-align:center;padding:40px 10px;}
+.unlock-box svg{opacity:.5;margin-bottom:16px;}
+.unlock-box p{color:var(--gray-dim);font-size:13px;margin-bottom:18px;line-height:1.6;}
+
+@media(max-width:980px){
+  nav.mainnav{position:fixed;top:74px;left:0;right:0;background:var(--navy);flex-direction:column;padding:20px 24px;gap:4px;border-bottom:1px solid var(--glass-brd);transform:translateY(-130%);transition:transform .4s var(--ease);}
+  nav.mainnav.open{transform:translateY(0);}
+  nav.mainnav a{padding:12px 0;border-bottom:1px solid var(--glass-brd);}
+  .navtoggle{display:flex;}
+  .hero-grid{grid-template-columns:1fr;}
+  .hero-visual{order:-1;max-width:340px;margin:0 auto 20px;}
+  .about-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<a href="#top" class="skip-link">Skip to content</a>
+
+<div id="loader">
+  <div class="loader-mark mono">HAMZA</div>
+  <div class="loader-track"><div class="loader-fill"></div></div>
+  <div class="loader-time mono">LOADING REEL — 00:00:01:12</div>
+</div>
+
+<div id="cursor-glow"></div>
+
+<header id="siteHeader">
+  <a href="#top" class="logo"><span class="logo-dot"></span><span id="navLogoText">Hamza</span></a>
+  <nav class="mainnav" id="mainNav"></nav>
+  <div class="header-actions">
+    <button class="btn-admin" id="adminOpenBtn" title="Site editor" aria-label="Open site editor">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+    </button>
+    <button class="navtoggle" id="navToggleBtn" aria-label="Menu" aria-expanded="false" aria-controls="mainNav">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" style="padding-top:110px;">
+    <div class="hero-bg" aria-hidden="true">
+      <div class="glow-a"></div>
+      <div class="glow-b"></div>
+      <svg viewBox="0 0 1440 800" preserveAspectRatio="none" style="opacity:.35">
+        <defs>
+          <linearGradient id="lg1" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#18d6cb" stop-opacity="0"/>
+            <stop offset="0.5" stop-color="#18d6cb" stop-opacity="0.5"/>
+            <stop offset="1" stop-color="#18d6cb" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <g id="keyframeLines"></g>
+      </svg>
+    </div>
+
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="diamond"></span><span id="heroEyebrow">FRAME 0001 — SHOWREEL.PRPROJ</span></div>
+        <h1 class="hero-name"><span id="heroName">Hamza</span></h1>
+        <div class="role-cycle">
+          <div class="role-cycle-inner mono" id="roleCycle">
+            <span><b>Video&nbsp;</b>&nbsp;Editor</span>
+            <span><b>Motion&nbsp;</b>&nbsp;Designer</span>
+            <span><b>Commercial&nbsp;</b>&nbsp;Editor</span>
+            <span><b>Colorist</b></span>
+          </div>
+        </div>
+        <p class="hero-copy" id="heroCopy">I am a passionate <strong>Video Editor &amp; Motion Designer</strong> with more than 3 years of continuous learning and real client experience. I've worked with Saudi organizations, international clients, local Egyptian companies, and more than <strong>60 freelance clients</strong>. My mission is to help brands and creators build stronger customer journeys through cinematic editing, motion graphics, storytelling, and creative advertising that increases engagement, views, and sales.</p>
+        <div class="hero-actions">
+          <a href="#portfolio" class="btn btn-primary" id="heroBtnPrimary">View Portfolio</a>
+          <a href="#contact" class="btn btn-ghost" id="heroBtnGhost">Contact Me</a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="monitor">
+          <div class="monitor-screen">
+            <div class="scanline"></div>
+            <div class="rec-badge"><span class="rec-dot"></span>PREVIEW</div>
+            <div class="avatar-slot" id="avatarSlot" title="Click in editor to change photo">
+              <div class="avatar-placeholder" id="avatarPlaceholder" aria-hidden="true">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>
+                <span class="lbl">PROFILE_MONITOR.MOV</span>
+              </div>
+              <img id="avatarImg" style="display:none" alt="">
+            </div>
+          </div>
+          <div class="monitor-timecode"><span id="tcLeft">00:00:12:04</span><span>REC ● 4K/60</span></div>
+          <div class="monitor-waveform" id="waveform" aria-hidden="true"></div>
+        </div>
+        <div class="float-card fc1">
+          <div class="fc-title">3+ Years</div>
+          <div class="fc-sub mono">EXPERIENCE.TRACK</div>
+        </div>
+        <div class="float-card fc2">
+          <div class="fc-title">60+ Clients</div>
+          <div class="fc-sub mono">GLOBAL.PROJECT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-cue"><span class="mono" style="font-size:10px;letter-spacing:.15em;">SCROLL</span><span class="line"></span></div>
+  </section>
+
+  <div class="timeline-rule" aria-hidden="true"><div class="ticks"><div class="playhead"></div></div></div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">00:00:24:00 — ABOUT</div>
+        <h2 class="section-title">Editing with intention,<br>grading with taste.</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy reveal">
+          <p id="aboutP1">I'm <strong>16 years old</strong> and constantly learning to become better every day. What started as curiosity about editing turned into a real craft — three-plus years of shipping work for real clients, real deadlines, and real briefs.</p>
+          <p id="aboutP2">I've cut reels and motion graphics for brands across <strong>Saudi Arabia</strong>, delivered commercials and showreels for <strong>international clients</strong>, and partnered with <strong>Egyptian companies</strong> on ongoing content — plus 60+ freelance projects along the way.</p>
+          <p id="aboutP3">Every project starts the same way: understand the story, understand the audience, then build a cut that earns attention and moves people to act.</p>
+          <div class="tag-row" id="aboutTags">
+            <span class="tag">Cinematic Editing</span>
+            <span class="tag">Motion Graphics</span>
+            <span class="tag">Color Grading</span>
+            <span class="tag">Storytelling</span>
+            <span class="tag">Creative Advertising</span>
+          </div>
+        </div>
+        <div class="stat-grid reveal" id="statGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="timeline-rule" aria-hidden="true"><div class="ticks"><div class="playhead" style="animation-delay:-3s"></div></div></div>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">00:00:48:00 — PORTFOLIO</div>
+        <h2 class="section-title">Selected work,<br>by category.</h2>
+        <p class="section-desc">A look inside the timeline — reels, commercials, and color work delivered for clients around the world.</p>
+      </div>
+      <div class="cat-tabs" id="catTabs"></div>
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <div class="timeline-rule" aria-hidden="true"><div class="ticks"><div class="playhead" style="animation-delay:-6s"></div></div></div>
+
+  <!-- CONNECT -->
+  <section id="connect">
+    <div class="section-inner">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">00:01:10:00 — CONNECT</div>
+        <h2 class="section-title">Follow the work.</h2>
+      </div>
+      <div class="connect-grid" id="connectGrid"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="contact-wrap reveal">
+        <div class="glow"></div>
+        <div class="contact-top">
+          <div class="section-eyebrow">00:01:32:00 — CONTACT</div>
+          <h2 class="section-title" id="contactTitle">Have a project in mind?</h2>
+          <p class="section-desc" id="contactDesc">Send a brief, a deadline, and a reference — I'll reply with next steps.</p>
+        </div>
+        <div class="contact-list" id="contactList"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span id="footerText">© <span id="footYear"></span> Hamza. All rights reserved.</span>
+  <span class="mono" style="font-size:11px;">EDITED IN 4K · GRADED BY HAND</span>
+</footer>
+
+<!-- PROJECT DETAIL VIEW -->
+<div class="project-view" id="projectView">
+  <button class="btn btn-ghost btn-sm pv-close" id="pvCloseBtn">✕ Close</button>
+  <div class="pv-inner">
+    <a href="#portfolio" class="pv-back" id="pvBack">← Back to Portfolio</a>
+    <div class="pv-player" id="pvPlayer"></div>
+    <h1 class="pv-title" id="pvTitle"></h1>
+    <div class="pv-grid">
+      <div>
+        <div class="section-eyebrow">PROJECT OVERVIEW</div>
+        <p class="pv-desc" id="pvDesc"></p>
+      </div>
+      <div class="pv-side">
+        <div class="pv-row"><div class="k">CLIENT</div><div class="v" id="pvClient">—</div></div>
+        <div class="pv-row"><div class="k">SOFTWARE USED</div><div class="v" id="pvSoftware">—</div></div>
+        <div class="pv-row"><div class="k">DATE</div><div class="v" id="pvDate">—</div></div>
+        <div class="pv-row"><div class="k">CATEGORY</div><div class="v" id="pvCategory">—</div></div>
+      </div>
+    </div>
+    <div style="margin-top:70px;">
+      <div class="section-eyebrow">RELATED PROJECTS</div>
+      <div class="project-grid" id="pvRelated" style="margin-top:24px;"></div>
+    </div>
+    <div class="pv-nav">
+      <a class="pv-nav-btn prev" id="pvPrev"><div class="dir">← PREVIOUS</div><div class="t"></div></a>
+      <a class="pv-nav-btn next" id="pvNext"><div class="dir">NEXT →</div><div class="t"></div></a>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-overlay"></div>
+<div id="admin-panel">
+  <div class="admin-head">
+    <h3>Site Editor</h3>
+    <button class="icon-btn" id="adminCloseBtn">✕</button>
+  </div>
+  <div id="adminGate" class="admin-body">
+    <div class="unlock-box">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      <p>Sign in with the account you created in Supabase Auth to edit the site. Changes save instantly and are visible to every visitor.</p>
+      <div class="field" style="max-width:280px;margin:0 auto 10px;"><input type="email" id="authEmail" placeholder="Email" autocomplete="username"></div>
+      <div class="field" style="max-width:280px;margin:0 auto 14px;"><input type="password" id="authPassword" placeholder="Password" autocomplete="current-password"></div>
+      <div id="authError" class="small-note" style="color:#ff6b6b;display:none;margin-bottom:10px;">Sign-in failed. Check your email and password.</div>
+      <button class="btn btn-primary btn-sm" id="unlockBtn">Sign In</button>
+    </div>
+  </div>
+  <div id="adminContent" style="display:none;flex:1;flex-direction:column;overflow:hidden;">
+    <div class="admin-tabs">
+      <div class="atab active" data-tab="hero">Hero</div>
+      <div class="atab" data-tab="about">About</div>
+      <div class="atab" data-tab="portfolio">Portfolio</div>
+      <div class="atab" data-tab="social">Social</div>
+      <div class="atab" data-tab="contact">Contact</div>
+      <div class="atab" data-tab="design">Design</div>
+    </div>
+    <div class="admin-body">
+      <div class="admin-section active" id="tab-hero">
+        <div class="field"><label>Eyebrow Tag</label><input id="f_heroEyebrow"></div>
+        <div class="field"><label>Name</label><input id="f_heroName"></div>
+        <div class="field"><label>Cycling Roles (one per line)</label><textarea id="f_roles" rows="4"></textarea></div>
+        <div class="field"><label>Intro Paragraph</label><textarea id="f_heroCopy" rows="6"></textarea></div>
+        <div class="field"><label>Profile Photo</label>
+          <div class="thumb-preview" id="avatarPreviewBox"><span class="small-note">No photo set</span></div>
+          <input type="file" accept="image/*" id="f_avatarFile">
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Primary Button Text</label><input id="f_btnPrimary"></div>
+          <div class="field"><label>Secondary Button Text</label><input id="f_btnGhost"></div>
+        </div>
+        <div class="small-note" style="margin:14px 0 6px;">NAVIGATION LABELS</div>
+        <div id="navEditor"></div>
+        <button class="btn btn-primary btn-sm" id="saveHeroBtn">Save Hero &amp; Navigation</button>
+      </div>
+
+      <div class="admin-section" id="tab-about">
+        <div class="field"><label>Paragraph 1</label><textarea id="f_aboutP1" rows="3"></textarea></div>
+        <div class="field"><label>Paragraph 2</label><textarea id="f_aboutP2" rows="3"></textarea></div>
+        <div class="field"><label>Paragraph 3</label><textarea id="f_aboutP3" rows="3"></textarea></div>
+        <div id="statsEditor"></div>
+        <button class="btn btn-ghost btn-sm" id="addStatBtn">+ Add Stat</button><br><br>
+        <button class="btn btn-primary btn-sm" id="saveAboutBtn">Save About Section</button>
+      </div>
+
+      <div class="admin-section" id="tab-portfolio">
+        <div class="small-note" style="margin-bottom:14px;">Add categories, then add videos inside each one. Drag ⠿ to reorder videos.</div>
+        <div id="categoryEditor"></div>
+        <button class="btn btn-ghost btn-sm" id="addCatBtn">+ Add Category</button>
+      </div>
+
+      <div class="admin-section" id="tab-social">
+        <div id="socialEditor"></div>
+        <button class="btn btn-primary btn-sm" id="saveSocialBtn" style="margin-top:10px;">Save Connect Section</button>
+      </div>
+
+      <div class="admin-section" id="tab-contact">
+        <div class="field"><label>Contact Title</label><input id="f_contactTitle"></div>
+        <div class="field"><label>Contact Description</label><textarea id="f_contactDesc" rows="2"></textarea></div>
+        <div class="field"><label>Phone Number</label><input id="f_contactPhone" placeholder="+20 100 000 0000"></div>
+        <div class="field"><label>Email</label><input id="f_contactEmail"></div>
+        <div class="field"><label>WhatsApp Number (with country code)</label><input id="f_contactWhatsapp"></div>
+        <div class="small-note">Both Instagram accounts shown in Contact are managed on the Social tab — edit them there and they'll update here too.</div>
+        <div class="field"><label>Footer Text</label><input id="f_footerText"></div>
+        <button class="btn btn-primary btn-sm" id="saveContactBtn">Save Contact Section</button>
+      </div>
+
+      <div class="admin-section" id="tab-design">
+        <div class="field-row">
+          <div class="field"><label>Accent Color (bright)</label><input type="color" id="f_accent1" style="height:44px;padding:4px;"></div>
+          <div class="field"><label>Accent Color (deep)</label><input type="color" id="f_accent2" style="height:44px;padding:4px;"></div>
+        </div>
+        <div class="field"><label>Font Pairing</label>
+          <select id="f_fontPair">
+            <option value="inter">Inter — clean, modern (default)</option>
+            <option value="grotesk">Space Grotesk + Inter — technical, editorial</option>
+            <option value="poppins">Poppins + Inter — soft, friendly</option>
+            <option value="playfair">Playfair Display + Inter — cinematic, luxury</option>
+          </select>
+        </div>
+        <button class="btn btn-primary btn-sm" id="saveDesignBtn">Save Design</button>
+        <div class="small-note" style="margin:22px 0 6px;">ACCOUNT</div>
+        <div class="small-note" id="authAccountEmail">Signed in.</div>
+        <button class="btn btn-ghost btn-sm" id="signOutBtn" style="margin-top:10px;">Sign Out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="save-toast" id="saveToast">Saved</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* =========================================================
+   DATA MODEL
+========================================================= */
+const DEFAULT_DATA = {
+  nav:{
+    links:[
+      {label:"About", anchor:"#about"},
+      {label:"Portfolio", anchor:"#portfolio"},
+      {label:"Connect", anchor:"#connect"},
+      {label:"Contact", anchor:"#contact"}
+    ]
+  },
+  design:{
+    accent1:"#18d6cb",
+    accent2:"#0a5d60",
+    font:"inter"
+  },
+  hero:{
+    eyebrow:"FRAME 0001 — SHOWREEL.PRPROJ",
+    name:"Hamza",
+    roles:["Video Editor","Motion Designer","Commercial Editor","Colorist"],
+    copy:"I am a passionate Video Editor & Motion Designer with more than 3 years of continuous learning and real client experience. I've worked with Saudi organizations, international clients, local Egyptian companies, and more than 60 freelance clients. My mission is to help brands and creators build stronger customer journeys through cinematic editing, motion graphics, storytelling, and creative advertising that increases engagement, views, and sales.",
+    avatar:"",
+    btnPrimary:"View Portfolio",
+    btnGhost:"Contact Me"
+  },
+  about:{
+    p1:"I'm 16 years old and constantly learning to become better every day. What started as curiosity about editing turned into a real craft — three-plus years of shipping work for real clients, real deadlines, and real briefs.",
+    p2:"I've cut reels and motion graphics for brands across Saudi Arabia, delivered commercials and showreels for international clients, and partnered with Egyptian companies on ongoing content — plus 60+ freelance projects along the way.",
+    p3:"Every project starts the same way: understand the story, understand the audience, then build a cut that earns attention and moves people to act.",
+    stats:[
+      {num:"3+",label:"Years Experience"},
+      {num:"60+",label:"Freelance Clients"},
+      {num:"KSA",label:"Saudi Organizations"},
+      {num:"Global",label:"International Clients"},
+      {num:"EGY",label:"Egyptian Companies"},
+      {num:"∞",label:"Continuous Learning"}
+    ]
+  },
+  categories:[
+    {id:"cat1",name:"Reels & Motion Graphics",videos:[]},
+    {id:"cat2",name:"Commercials & Showreels",videos:[]},
+    {id:"cat3",name:"Color Grading",videos:[]}
+  ],
+  social:[
+    {kicker:"PROFESSIONAL",label:"Professional Portfolio",handle:"@ih_l__",url:"https://www.instagram.com/ih_l__/"},
+    {kicker:"PERSONAL",label:"Personal Profile",handle:"@_iz.rr",url:"https://www.instagram.com/_iz.rr/"}
+  ],
+  contact:{
+    title:"Have a project in mind?",
+    desc:"Send a brief, a deadline, and a reference — I'll reply with next steps.",
+    phone:"+20 100 000 0000",
+    email:"hello@hamzaedits.com",
+    whatsapp:"+20 100 000 0000"
+  },
+  footerText:"© Hamza. All rights reserved."
+};
+
+let data = JSON.parse(JSON.stringify(DEFAULT_DATA));
+let currentCategoryId = null;
+let currentProjectId = null;
+
+function uid(){ return 'id'+Math.random().toString(36).slice(2,10); }
+
+/* =========================================================
+   SUPABASE
+   Fill these in from Project Settings → API in your Supabase
+   dashboard. The anon/public key is DESIGNED to be public in
+   client-side code — it's safe to commit — access is controlled
+   by the Row Level Security policies in supabase-schema.sql, not
+   by hiding this key. Never put your service_role key here.
+========================================================= */
+const SUPABASE_URL = "https://nnvrzdetlsetvgkfivye.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_DjBd4juRebVzqi4AKH20BA_bdH96yQ6";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let session = null;
+
+async function loadData(){
+  try{
+    const { data: row, error } = await sb.from('site_content').select('data').eq('id','main').single();
+    if(row && row.data){
+      data = deepMerge(JSON.parse(JSON.stringify(DEFAULT_DATA)), row.data);
+    }
+  }catch(e){ /* no saved row yet — first run, use defaults */ }
+  const { data: sessData } = await sb.auth.getSession();
+  session = sessData ? sessData.session : null;
+  applyDesign();
+  renderAll();
+}
+function deepMerge(base, override){
+  if(Array.isArray(base)) return override!==undefined ? override : base;
+  if(typeof base==='object' && base!==null){
+    const out = {...base};
+    for(const k in (override||{})){
+      out[k] = deepMerge(base[k], override[k]);
+    }
+    return out;
+  }
+  return override!==undefined ? override : base;
+}
+async function persist(){
+  try{
+    const { error } = await sb.from('site_content').upsert({ id:'main', data, updated_at:new Date().toISOString() });
+    if(error) throw error;
+    toast('Saved — visible to everyone with the link');
+  }catch(e){
+    console.error('save failed', e);
+    toast(e.message && e.message.includes('row-level security') ? 'Save failed — sign in again' : 'Save failed — try again');
+  }
+}
+/* Upload a compressed image blob to the public "media" Storage bucket, return its public URL */
+async function uploadMedia(blob, prefix){
+  const path = prefix+'/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'.jpg';
+  const { error } = await sb.storage.from('media').upload(path, blob, { contentType:'image/jpeg', upsert:false });
+  if(error) throw error;
+  const { data: pub } = sb.storage.from('media').getPublicUrl(path);
+  return pub.publicUrl;
+}
+function toast(msg){
+  const t = document.getElementById('saveToast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+/* =========================================================
+   RENDER: HERO
+========================================================= */
+function renderHero(){
+  document.getElementById('heroEyebrow').textContent = data.hero.eyebrow;
+  document.getElementById('heroName').textContent = data.hero.name;
+  document.getElementById('navLogoText').textContent = data.hero.name;
+  document.getElementById('heroCopy').innerHTML = data.hero.copy.replace(/\b(3\+ years|60\+ freelance clients)\b/gi,'<strong>$1</strong>');
+  const rc = document.getElementById('roleCycle');
+  rc.innerHTML = data.hero.roles.map(r=>`<span>${escapeHtml(r)}</span>`).join('');
+  const av = document.getElementById('avatarImg');
+  const ph = document.getElementById('avatarPlaceholder');
+  av.alt = data.hero.name ? data.hero.name+' — profile photo' : 'Profile photo';
+  if(data.hero.avatar){ av.src = data.hero.avatar; av.style.display='block'; ph.style.display='none'; }
+  else { av.style.display='none'; ph.style.display='flex'; }
+  document.getElementById('heroBtnPrimary').textContent = data.hero.btnPrimary || 'View Portfolio';
+  document.getElementById('heroBtnGhost').textContent = data.hero.btnGhost || 'Contact Me';
+  const ld = document.getElementById('ldJson');
+  if(ld){
+    ld.textContent = JSON.stringify({
+      "@context":"https://schema.org","@type":"Person",
+      "name":data.hero.name,
+      "jobTitle":data.hero.roles.join(' / '),
+      "description":data.hero.copy
+    });
+  }
+  document.title = data.hero.name+' — '+(data.hero.roles[0]||'Video Editor & Motion Designer');
+}
+function renderNav(){
+  document.getElementById('mainNav').innerHTML = data.nav.links.map(l=>`<a href="${escapeAttr(l.anchor)}">${escapeHtml(l.label)}</a>`).join('');
+  document.querySelectorAll('nav.mainnav a').forEach(a=>a.addEventListener('click', ()=>{
+    document.getElementById('mainNav').classList.remove('open');
+    document.getElementById('navToggleBtn').setAttribute('aria-expanded','false');
+  }));
+}
+const FONT_PAIRS = {
+  inter:{display:"'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif", body:"'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif"},
+  grotesk:{display:"'Space Grotesk','Inter',sans-serif", body:"'Inter',-apple-system,sans-serif", gfamily:"Space+Grotesk:wght@500;600;700"},
+  poppins:{display:"'Poppins','Inter',sans-serif", body:"'Inter',-apple-system,sans-serif", gfamily:"Poppins:wght@500;600;700;800"},
+  playfair:{display:"'Playfair Display',serif", body:"'Inter',-apple-system,sans-serif", gfamily:"Playfair+Display:wght@600;700;800"}
+};
+const loadedFonts = new Set();
+function ensureFontLoaded(pair){
+  if(!pair.gfamily || loadedFonts.has(pair.gfamily)) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = 'https://fonts.googleapis.com/css2?family='+pair.gfamily+'&display=swap';
+  document.head.appendChild(link);
+  loadedFonts.add(pair.gfamily);
+}
+function applyDesign(){
+  const root = document.documentElement.style;
+  root.setProperty('--turq', data.design.accent1);
+  root.setProperty('--turq-dim', data.design.accent1);
+  root.setProperty('--teal-deep', data.design.accent2);
+  root.setProperty('--teal', data.design.accent2);
+  const pair = FONT_PAIRS[data.design.font] || FONT_PAIRS.inter;
+  ensureFontLoaded(pair);
+  root.setProperty('--font-display', pair.display);
+  root.setProperty('--font-body', pair.body);
+}
+function startRoleCycler(){
+  const wrap = document.getElementById('roleCycle');
+  let i = 0;
+  setInterval(()=>{
+    const n = data.hero.roles.length;
+    if(n<2) return;
+    i = (i+1) % n;
+    wrap.style.transform = `translateY(-${i*38}px)`;
+  }, 2200);
+}
+
+/* =========================================================
+   RENDER: ABOUT
+========================================================= */
+function renderAbout(){
+  document.getElementById('aboutP1').textContent = data.about.p1;
+  document.getElementById('aboutP2').textContent = data.about.p2;
+  document.getElementById('aboutP3').textContent = data.about.p3;
+  document.getElementById('statGrid').innerHTML = data.about.stats.map(s=>`
+    <div class="stat-cell"><div class="stat-num">${escapeHtml(s.num)}</div><div class="stat-label">${escapeHtml(s.label)}</div></div>
+  `).join('');
+}
+
+/* =========================================================
+   RENDER: PORTFOLIO
+========================================================= */
+function placeholderGraphic(seed){
+  // deterministic pseudo-random bars evoking a timeline / waveform, no stock photos
+  let bars = '';
+  let s = 0; for(const c of seed) s += c.charCodeAt(0);
+  for(let i=0;i<24;i++){
+    const h = 15 + ((s*(i+7))%60);
+    bars += `<rect x="${i*16}" y="${100-h}" width="9" height="${h}" fill="url(#lgCard)" opacity="0.7"/>`;
+  }
+  return `<svg viewBox="0 0 400 100" preserveAspectRatio="none" style="width:100%;height:100%;">
+    <defs><linearGradient id="lgCard" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${data.design.accent1}"/><stop offset="1" stop-color="${data.design.accent2}"/></linearGradient></defs>
+    <rect width="400" height="100" fill="#0d1c2b"/>${bars}
+  </svg>`;
+}
+function renderCatTabs(){
+  const wrap = document.getElementById('catTabs');
+  if(!currentCategoryId && data.categories.length) currentCategoryId = data.categories[0].id;
+  wrap.innerHTML = data.categories.map(c=>`
+    <button class="cat-tab ${c.id===currentCategoryId?'active':''}" data-cat="${c.id}">${escapeHtml(c.name)} <span class="count">${c.videos.length}</span></button>
+  `).join('');
+  wrap.querySelectorAll('.cat-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      currentCategoryId = btn.dataset.cat;
+      renderCatTabs(); renderProjectGrid();
+      history.pushState(null,'', '#/category/'+currentCategoryId);
+    });
+  });
+}
+function renderProjectGrid(){
+  const grid = document.getElementById('projectGrid');
+  const cat = data.categories.find(c=>c.id===currentCategoryId);
+  if(!cat || !cat.videos.length){
+    grid.innerHTML = `<div class="empty-cat" style="grid-column:1/-1;">No projects in this category yet.</div>`;
+    return;
+  }
+  grid.innerHTML = cat.videos.map(v=>`
+    <div class="pcard reveal in" data-vid="${v.id}" data-cat="${cat.id}">
+      <div class="pcard-thumb">
+        ${v.thumb ? `<img src="${v.thumb}" alt="${escapeHtml(v.title)}" loading="lazy" decoding="async">` : `<div class="ph-graphic">${placeholderGraphic(v.title+v.id)}</div>`}
+        <div class="play-btn"><div class="play-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="#f4f8fa"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-title">${escapeHtml(v.title)}</div>
+        <div class="pcard-desc">${escapeHtml(v.desc||'')}</div>
+        <div class="pcard-meta"><span>${escapeHtml(v.client||'')}</span><span>${escapeHtml(v.software||'')}</span></div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.pcard').forEach(card=>{
+    card.addEventListener('click', ()=>openProject(card.dataset.cat, card.dataset.vid));
+  });
+}
+
+/* =========================================================
+   RENDER: PROJECT DETAIL
+========================================================= */
+function embedFor(v){
+  if(v.type==='youtube' && v.url){
+    const id = extractYouTubeId(v.url);
+    return `<iframe src="https://www.youtube.com/embed/${id}" title="${escapeAttr(v.title||'Project video')}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  }
+  if(v.type==='vimeo' && v.url){
+    const id = extractVimeoId(v.url);
+    return `<iframe src="https://player.vimeo.com/video/${id}" title="${escapeAttr(v.title||'Project video')}" allow="autoplay; picture-in-picture" allowfullscreen loading="lazy"></iframe>`;
+  }
+  if(v.type==='url' && v.url){
+    return `<video controls preload="metadata" playsinline src="${v.url}" aria-label="${escapeAttr(v.title||'Project video')}"></video>`;
+  }
+  return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#5c6e79;font-family:'Roboto Mono',monospace;font-size:13px;">NO VIDEO SOURCE SET</div>`;
+}
+function extractYouTubeId(url){
+  const m = url.match(/(?:youtu\.be\/|v=|embed\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : url;
+}
+function extractVimeoId(url){
+  const m = url.match(/vimeo\.com\/(?:.*\/)?(\d+)/);
+  return m ? m[1] : url;
+}
+function openProject(catId, vidId, pushHistory){
+  if(pushHistory===undefined) pushHistory = true;
+  const cat = data.categories.find(c=>c.id===catId);
+  if(!cat) return;
+  const list = cat.videos;
+  const idx = list.findIndex(v=>v.id===vidId);
+  const v = list[idx];
+  if(!v) return;
+  currentCategoryId = catId; currentProjectId = vidId;
+  document.getElementById('pvPlayer').innerHTML = embedFor(v);
+  document.getElementById('pvTitle').textContent = v.title;
+  document.getElementById('pvDesc').textContent = v.desc || 'No description added yet.';
+  document.getElementById('pvClient').textContent = v.client || '—';
+  document.getElementById('pvSoftware').textContent = v.software || '—';
+  document.getElementById('pvDate').textContent = v.date || '—';
+  document.getElementById('pvCategory').textContent = cat.name;
+  const prev = list[(idx-1+list.length)%list.length];
+  const next = list[(idx+1)%list.length];
+  document.getElementById('pvPrev').querySelector('.t').textContent = list.length>1 ? prev.title : '—';
+  document.getElementById('pvNext').querySelector('.t').textContent = list.length>1 ? next.title : '—';
+  document.getElementById('pvPrev').onclick = (e)=>{e.preventDefault(); if(list.length>1) openProject(catId, prev.id);};
+  document.getElementById('pvNext').onclick = (e)=>{e.preventDefault(); if(list.length>1) openProject(catId, next.id);};
+  renderRelated(cat, v.id);
+  document.getElementById('projectView').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  window.scrollTo(0,0);
+  if(pushHistory) history.pushState(null,'', '#/project/'+catId+'/'+vidId);
+}
+function renderRelated(cat, currentVidId){
+  let pool = cat.videos.filter(v=>v.id!==currentVidId).map(v=>({v, catId:cat.id, catName:cat.name}));
+  if(pool.length < 3){
+    data.categories.filter(c=>c.id!==cat.id).forEach(c=>{
+      c.videos.forEach(v=> pool.push({v, catId:c.id, catName:c.name}));
+    });
+  }
+  pool = pool.slice(0,3);
+  const grid = document.getElementById('pvRelated');
+  if(!pool.length){ grid.innerHTML = '<div class="empty-cat" style="grid-column:1/-1;">No other projects yet.</div>'; return; }
+  grid.innerHTML = pool.map(({v,catId,catName})=>`
+    <div class="pcard reveal in" data-vid="${v.id}" data-cat="${catId}">
+      <div class="pcard-thumb">
+        ${v.thumb ? `<img src="${v.thumb}" alt="${escapeHtml(v.title)}" loading="lazy" decoding="async">` : `<div class="ph-graphic">${placeholderGraphic(v.title+v.id)}</div>`}
+        <div class="play-btn"><div class="play-circle"><svg width="18" height="18" viewBox="0 0 24 24" fill="#f4f8fa"><path d="M8 5v14l11-7z"/></svg></div></div>
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-title">${escapeHtml(v.title)}</div>
+        <div class="pcard-desc">${escapeHtml(catName)}</div>
+      </div>
+    </div>
+  `).join('');
+  grid.querySelectorAll('.pcard').forEach(card=>{
+    card.addEventListener('click', ()=>openProject(card.dataset.cat, card.dataset.vid));
+  });
+}
+function closeProject(pushHistory){
+  if(pushHistory===undefined) pushHistory = true;
+  document.getElementById('projectView').classList.remove('open');
+  document.getElementById('pvPlayer').innerHTML = '';
+  document.body.style.overflow = '';
+  if(pushHistory) history.pushState(null,'', '#/category/'+currentCategoryId);
+}
+document.getElementById('pvCloseBtn').addEventListener('click', ()=>closeProject());
+document.getElementById('pvBack').addEventListener('click', (e)=>{e.preventDefault(); closeProject();});
+
+/* deep-link routing so categories and projects have shareable URLs */
+function routeFromHash(){
+  const h = location.hash;
+  if(h.startsWith('#/project/')){
+    const [,,catId,vidId] = h.split('/');
+    if(catId && vidId){ currentCategoryId = catId; renderCatTabs(); renderProjectGrid(); openProject(catId, vidId, false); }
+  } else if(h.startsWith('#/category/')){
+    const catId = h.split('/')[2];
+    if(catId && data.categories.find(c=>c.id===catId)){
+      currentCategoryId = catId; renderCatTabs(); renderProjectGrid();
+      document.getElementById('portfolio').scrollIntoView();
+    }
+  }
+}
+window.addEventListener('popstate', routeFromHash);
+
+/* =========================================================
+   RENDER: CONNECT + CONTACT
+========================================================= */
+function renderConnect(){
+  document.getElementById('connectGrid').innerHTML = data.social.map(s=>`
+    <a class="connect-card reveal in" href="${s.url}" target="_blank" rel="noopener">
+      <div class="glow"></div>
+      <div class="connect-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></div>
+      <div class="connect-kicker">${escapeHtml(s.kicker)}</div>
+      <div class="connect-name">${escapeHtml(s.label)}</div>
+      <div class="connect-handle">${escapeHtml(s.handle)}</div>
+      <div class="connect-arrow">↗</div>
+    </a>
+  `).join('');
+}
+function renderContact(){
+  document.getElementById('contactTitle').textContent = data.contact.title;
+  document.getElementById('contactDesc').textContent = data.contact.desc;
+  document.getElementById('footerText').innerHTML = `${escapeHtml(data.footerText)}`;
+  const phoneDigits = (data.contact.phone||'').replace(/[^0-9+]/g,'');
+  const waDigits = (data.contact.whatsapp||'').replace(/[^0-9]/g,'');
+  const items = [
+    {k:'PHONE', v:data.contact.phone, icon:'📞', href:'tel:'+phoneDigits, external:false},
+    {k:'EMAIL', v:data.contact.email, icon:'✉️', href:'mailto:'+data.contact.email, external:false},
+    {k:'WHATSAPP', v:data.contact.whatsapp, icon:'💬', href:'https://wa.me/'+waDigits, external:true},
+  ];
+  data.social.forEach(s=>{
+    items.push({k:(s.kicker||'SOCIAL')+' INSTAGRAM', v:s.handle, icon:'📷', href:s.url, external:true, label:s.label});
+  });
+  document.getElementById('contactList').innerHTML = items.filter(i=>i.v).map(i=>`
+    <a class="contact-item" href="${escapeAttr(i.href)}" ${i.external?'target="_blank" rel="noopener noreferrer"':''} aria-label="${escapeAttr((i.label||i.k)+': '+i.v)}">
+      <div class="ci-icon" aria-hidden="true">${i.icon}</div>
+      <div><div class="ci-k">${escapeHtml(i.label||i.k)}</div><div class="ci-v">${escapeHtml(i.v)}</div></div>
+    </a>
+  `).join('');
+}
+
+function escapeHtml(s){
+  return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function renderAll(){
+  renderNav();
+  renderHero();
+  renderAbout();
+  renderCatTabs();
+  renderProjectGrid();
+  renderConnect();
+  renderContact();
+  document.getElementById('footYear').textContent = new Date().getFullYear();
+}
+
+/* =========================================================
+   HERO BG — timeline keyframe lines
+========================================================= */
+(function drawKeyframeLines(){
+  const g = document.getElementById('keyframeLines');
+  let svgStr = '';
+  for(let i=0;i<5;i++){
+    const y = 100 + i*140;
+    const amp = 20 + i*6;
+    let d = `M -50 ${y} `;
+    for(let x=0;x<=1500;x+=100){
+      d += `L ${x} ${y + Math.sin(x/150+i)*amp} `;
+    }
+    svgStr += `<path d="${d}" stroke="url(#lg1)" stroke-width="1.2" fill="none" opacity="${0.5-i*0.07}"/>`;
+    svgStr += `<circle cx="${300+i*180}" cy="${y}" r="3" fill="#18d6cb" opacity="0.7"/>`;
+  }
+  g.innerHTML = svgStr;
+})();
+
+/* waveform bars in hero monitor */
+(function buildWaveform(){
+  const wf = document.getElementById('waveform');
+  let html='';
+  for(let i=0;i<48;i++){ html += `<i style="height:${8+Math.round(Math.sin(i*0.5)*8+8)}px"></i>`; }
+  wf.innerHTML = html;
+})();
+
+/* =========================================================
+   UI: nav, scroll, cursor, reveal
+========================================================= */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', ()=>{
+  header.classList.toggle('scrolled', window.scrollY>10);
+});
+document.getElementById('navToggleBtn').addEventListener('click', ()=>{
+  const open = document.getElementById('mainNav').classList.toggle('open');
+  document.getElementById('navToggleBtn').setAttribute('aria-expanded', open ? 'true':'false');
+});
+
+const glow = document.getElementById('cursor-glow');
+window.addEventListener('mousemove', e=>{
+  glow.style.left = e.clientX+'px';
+  glow.style.top = e.clientY+'px';
+});
+
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(en=>{ if(en.isIntersecting) en.target.classList.add('in'); });
+},{threshold:0.15});
+function observeReveals(){ document.querySelectorAll('.reveal').forEach(el=>io.observe(el)); }
+
+window.addEventListener('load', ()=>{
+  setTimeout(()=>document.getElementById('loader').classList.add('hide'), 600);
+});
+
+/* =========================================================
+   ADMIN PANEL
+========================================================= */
+const adminOverlay = document.getElementById('admin-overlay');
+const adminPanel = document.getElementById('admin-panel');
+document.getElementById('adminOpenBtn').addEventListener('click', ()=>{
+  adminOverlay.classList.add('open'); adminPanel.classList.add('open');
+  if(session){
+    document.getElementById('adminGate').style.display='none';
+    document.getElementById('adminContent').style.display='flex';
+    document.getElementById('authAccountEmail').textContent = 'Signed in as '+(session.user ? session.user.email : '');
+  }
+});
+function closeAdmin(){ adminOverlay.classList.remove('open'); adminPanel.classList.remove('open'); }
+document.getElementById('adminCloseBtn').addEventListener('click', closeAdmin);
+adminOverlay.addEventListener('click', closeAdmin);
+async function attemptUnlock(){
+  const email = document.getElementById('authEmail').value.trim();
+  const password = document.getElementById('authPassword').value;
+  const btn = document.getElementById('unlockBtn');
+  btn.textContent = 'Signing in…'; btn.disabled = true;
+  const { data: authData, error } = await sb.auth.signInWithPassword({ email, password });
+  btn.textContent = 'Sign In'; btn.disabled = false;
+  if(error || !authData.session){
+    document.getElementById('authError').style.display='block';
+    return;
+  }
+  session = authData.session;
+  document.getElementById('adminGate').style.display='none';
+  document.getElementById('adminContent').style.display='flex';
+  document.getElementById('authError').style.display='none';
+  document.getElementById('authAccountEmail').textContent = 'Signed in as '+email;
+  fillAdminForms();
+}
+document.getElementById('unlockBtn').addEventListener('click', attemptUnlock);
+document.getElementById('authPassword').addEventListener('keydown', (e)=>{ if(e.key==='Enter') attemptUnlock(); });
+document.getElementById('signOutBtn').addEventListener('click', async ()=>{
+  await sb.auth.signOut();
+  session = null;
+  closeAdmin();
+  document.getElementById('adminGate').style.display='block';
+  document.getElementById('adminContent').style.display='none';
+  document.getElementById('authPassword').value='';
+});
+document.querySelectorAll('.atab').forEach(t=>{
+  t.addEventListener('click', ()=>{
+    document.querySelectorAll('.atab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.admin-section').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('tab-'+t.dataset.tab).classList.add('active');
+  });
+});
+
+function fillAdminForms(){
+  // hero
+  document.getElementById('f_heroEyebrow').value = data.hero.eyebrow;
+  document.getElementById('f_heroName').value = data.hero.name;
+  document.getElementById('f_roles').value = data.hero.roles.join('\n');
+  document.getElementById('f_heroCopy').value = data.hero.copy;
+  const box = document.getElementById('avatarPreviewBox');
+  box.innerHTML = data.hero.avatar ? `<img src="${data.hero.avatar}">` : `<span class="small-note">No photo set</span>`;
+  document.getElementById('f_btnPrimary').value = data.hero.btnPrimary;
+  document.getElementById('f_btnGhost').value = data.hero.btnGhost;
+  renderNavEditor();
+  // design
+  document.getElementById('f_accent1').value = data.design.accent1;
+  document.getElementById('f_accent2').value = data.design.accent2;
+  document.getElementById('f_fontPair').value = data.design.font;
+  // about
+  document.getElementById('f_aboutP1').value = data.about.p1;
+  document.getElementById('f_aboutP2').value = data.about.p2;
+  document.getElementById('f_aboutP3').value = data.about.p3;
+  renderStatsEditor();
+  // portfolio
+  renderCategoryEditor();
+  // social
+  renderSocialEditor();
+  // contact
+  document.getElementById('f_contactTitle').value = data.contact.title;
+  document.getElementById('f_contactDesc').value = data.contact.desc;
+  document.getElementById('f_contactPhone').value = data.contact.phone;
+  document.getElementById('f_contactEmail').value = data.contact.email;
+  document.getElementById('f_contactWhatsapp').value = data.contact.whatsapp;
+  document.getElementById('f_footerText').value = data.footerText;
+}
+
+/* Downscale + compress uploaded images before storing, for faster loads and smaller saves */
+function compressImage(file, maxDim, quality){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > h && w > maxDim){ h = Math.round(h*maxDim/w); w = maxDim; }
+        else if(h > maxDim){ w = Math.round(w*maxDim/h); h = maxDim; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        canvas.toBlob(blob=> resolve({dataUrl, blob}), 'image/jpeg', quality);
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+/* --- Hero save --- */
+document.getElementById('f_avatarFile').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const { dataUrl, blob } = await compressImage(file, 900, 0.85);
+    document.getElementById('avatarPreviewBox').innerHTML = `<img src="${dataUrl}">`; // instant local preview
+    toast('Uploading photo…');
+    const url = await uploadMedia(blob, 'avatar');
+    data.hero.avatar = url;
+    toast('Photo uploaded');
+  }catch(err){
+    console.error(err);
+    toast('Could not upload that image');
+  }
+});
+function renderNavEditor(){
+  const wrap = document.getElementById('navEditor');
+  wrap.innerHTML = data.nav.links.map((l,i)=>`
+    <div class="field-row" data-i="${i}" style="margin-bottom:8px;">
+      <div class="field" style="margin-bottom:0;"><input class="nav-label-in" value="${escapeAttr(l.label)}" placeholder="Label"></div>
+      <div class="field" style="margin-bottom:0;"><input class="nav-anchor-in" value="${escapeAttr(l.anchor)}" placeholder="#section"></div>
+    </div>
+  `).join('');
+}
+document.getElementById('saveHeroBtn').addEventListener('click', async ()=>{
+  data.hero.eyebrow = document.getElementById('f_heroEyebrow').value.trim();
+  data.hero.name = document.getElementById('f_heroName').value.trim() || 'Hamza';
+  data.hero.roles = document.getElementById('f_roles').value.split('\n').map(s=>s.trim()).filter(Boolean);
+  data.hero.copy = document.getElementById('f_heroCopy').value.trim();
+  data.hero.btnPrimary = document.getElementById('f_btnPrimary').value.trim() || 'View Portfolio';
+  data.hero.btnGhost = document.getElementById('f_btnGhost').value.trim() || 'Contact Me';
+  document.querySelectorAll('#navEditor .field-row').forEach((row,i)=>{
+    data.nav.links[i].label = row.querySelector('.nav-label-in').value.trim() || data.nav.links[i].label;
+    data.nav.links[i].anchor = row.querySelector('.nav-anchor-in').value.trim() || data.nav.links[i].anchor;
+  });
+  renderHero();
+  renderNav();
+  await persist();
+});
+
+document.getElementById('saveDesignBtn').addEventListener('click', async ()=>{
+  data.design.accent1 = document.getElementById('f_accent1').value;
+  data.design.accent2 = document.getElementById('f_accent2').value;
+  data.design.font = document.getElementById('f_fontPair').value;
+  applyDesign();
+  await persist();
+});
+
+/* --- About save --- */
+function renderStatsEditor(){
+  const wrap = document.getElementById('statsEditor');
+  wrap.innerHTML = data.about.stats.map((s,i)=>`
+    <div class="admin-card" data-i="${i}">
+      <div class="field-row">
+        <div class="field"><label>Number</label><input class="stat-num-in" value="${escapeAttr(s.num)}"></div>
+        <div class="field"><label>Label</label><input class="stat-label-in" value="${escapeAttr(s.label)}"></div>
+      </div>
+      <button class="icon-btn danger stat-del">✕</button>
+    </div>
+  `).join('');
+  wrap.querySelectorAll('.stat-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = +btn.closest('.admin-card').dataset.i;
+      data.about.stats.splice(i,1);
+      renderStatsEditor();
+    });
+  });
+}
+document.getElementById('addStatBtn').addEventListener('click', ()=>{
+  data.about.stats.push({num:'New', label:'Stat label'});
+  renderStatsEditor();
+});
+document.getElementById('saveAboutBtn').addEventListener('click', async ()=>{
+  data.about.p1 = document.getElementById('f_aboutP1').value.trim();
+  data.about.p2 = document.getElementById('f_aboutP2').value.trim();
+  data.about.p3 = document.getElementById('f_aboutP3').value.trim();
+  document.querySelectorAll('#statsEditor .admin-card').forEach((card,i)=>{
+    data.about.stats[i].num = card.querySelector('.stat-num-in').value.trim();
+    data.about.stats[i].label = card.querySelector('.stat-label-in').value.trim();
+  });
+  renderAbout();
+  await persist();
+});
+
+/* --- Portfolio (categories + videos) editor --- */
+let dragSrcCat=null, dragSrcIdx=null, dragSrcCategoryIndex=null;
+
+function renderCategoryEditor(){
+  const wrap = document.getElementById('categoryEditor');
+  wrap.innerHTML = data.categories.map((cat, ci)=>`
+    <div class="admin-card" data-cat="${cat.id}" draggable="true">
+      <div class="admin-card-head">
+        <span class="drag-handle" style="margin-right:8px;">⠿</span>
+        <input class="cat-name-in" value="${escapeAttr(cat.name)}" style="font-weight:700;font-size:14px;border:none;background:transparent;padding:6px 0;flex:1;">
+        <div style="display:flex;gap:6px;">
+          <button class="icon-btn cat-up" title="Move up">↑</button>
+          <button class="icon-btn cat-down" title="Move down">↓</button>
+          <button class="icon-btn cat-dup" title="Duplicate">⧉</button>
+          <button class="icon-btn danger cat-del" title="Delete category">✕</button>
+        </div>
+      </div>
+      <div class="video-list" data-cat="${cat.id}">
+        ${cat.videos.map((v,vi)=>`
+          <div class="video-item" draggable="true" data-cat="${cat.id}" data-idx="${vi}" data-vid="${v.id}">
+            <span class="drag-handle">⠿</span>
+            <div class="vi-thumb">${v.thumb?`<img src="${v.thumb}">`:''}</div>
+            <div class="vi-info"><div class="vi-title">${escapeHtml(v.title||'Untitled')}</div><div class="vi-sub">${v.type||'no source'}</div></div>
+            <button class="icon-btn vi-edit">✎</button>
+            <button class="icon-btn danger vi-del">✕</button>
+          </div>
+        `).join('') || '<div class="small-note">No videos yet.</div>'}
+      </div>
+      <div class="admin-actions"><button class="btn btn-ghost btn-sm cat-add-video">+ Add Video</button></div>
+    </div>
+  `).join('');
+
+  wrap.querySelectorAll('.admin-card').forEach(card=>{
+    const catId = card.dataset.cat;
+    card.addEventListener('dragstart', (e)=>{
+      if(e.target.closest('.video-item')){ return; }
+      dragSrcCategoryIndex = data.categories.findIndex(c=>c.id===catId);
+      card.classList.add('dragging');
+    });
+    card.addEventListener('dragend', ()=> card.classList.remove('dragging'));
+    card.addEventListener('dragover', (e)=> e.preventDefault());
+    card.addEventListener('drop', async (e)=>{
+      if(e.target.closest('.video-item')) return;
+      e.preventDefault();
+      const targetIndex = data.categories.findIndex(c=>c.id===catId);
+      if(dragSrcCategoryIndex===null || dragSrcCategoryIndex===targetIndex) return;
+      const [moved] = data.categories.splice(dragSrcCategoryIndex,1);
+      data.categories.splice(targetIndex,0,moved);
+      dragSrcCategoryIndex = null;
+      renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+    });
+    card.querySelector('.cat-name-in').addEventListener('change', async (e)=>{
+      const cat = data.categories.find(c=>c.id===catId);
+      cat.name = e.target.value.trim() || cat.name;
+      await persist(); renderCatTabs(); renderProjectGrid();
+    });
+    card.querySelector('.cat-del').addEventListener('click', async ()=>{
+      if(!confirm('Delete this category and all its videos?')) return;
+      data.categories = data.categories.filter(c=>c.id!==catId);
+      if(currentCategoryId===catId) currentCategoryId=null;
+      renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+    });
+    card.querySelector('.cat-dup').addEventListener('click', async ()=>{
+      const cat = data.categories.find(c=>c.id===catId);
+      const copy = JSON.parse(JSON.stringify(cat));
+      copy.id = uid(); copy.name = cat.name + ' Copy';
+      copy.videos = copy.videos.map(v=>({...v, id:uid()}));
+      const idx = data.categories.findIndex(c=>c.id===catId);
+      data.categories.splice(idx+1,0,copy);
+      renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+    });
+    card.querySelector('.cat-up').addEventListener('click', async ()=>{
+      const idx = data.categories.findIndex(c=>c.id===catId);
+      if(idx>0){ [data.categories[idx-1],data.categories[idx]]=[data.categories[idx],data.categories[idx-1]]; renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid(); }
+    });
+    card.querySelector('.cat-down').addEventListener('click', async ()=>{
+      const idx = data.categories.findIndex(c=>c.id===catId);
+      if(idx<data.categories.length-1){ [data.categories[idx+1],data.categories[idx]]=[data.categories[idx],data.categories[idx+1]]; renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid(); }
+    });
+    card.querySelector('.cat-add-video').addEventListener('click', ()=>{
+      openVideoEditor(catId, null);
+    });
+    card.querySelectorAll('.vi-edit').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const item = btn.closest('.video-item');
+        openVideoEditor(item.dataset.cat, item.dataset.vid);
+      });
+    });
+    card.querySelectorAll('.vi-del').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const item = btn.closest('.video-item');
+        const cat = data.categories.find(c=>c.id===item.dataset.cat);
+        cat.videos = cat.videos.filter(v=>v.id!==item.dataset.vid);
+        renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+      });
+    });
+    // drag reorder
+    card.querySelectorAll('.video-item').forEach(item=>{
+      item.addEventListener('dragstart', ()=>{
+        dragSrcCat = item.dataset.cat; dragSrcIdx = +item.dataset.idx;
+        item.classList.add('dragging');
+      });
+      item.addEventListener('dragend', ()=> item.classList.remove('dragging'));
+      item.addEventListener('dragover', (e)=> e.preventDefault());
+      item.addEventListener('drop', async (e)=>{
+        e.preventDefault();
+        const targetCat = item.dataset.cat, targetIdx = +item.dataset.idx;
+        if(dragSrcCat!==targetCat) return; // only reorder within same category
+        const cat = data.categories.find(c=>c.id===targetCat);
+        const [moved] = cat.videos.splice(dragSrcIdx,1);
+        cat.videos.splice(targetIdx,0,moved);
+        renderCategoryEditor(); await persist(); renderProjectGrid();
+      });
+    });
+  });
+}
+document.getElementById('addCatBtn').addEventListener('click', async ()=>{
+  data.categories.push({id:uid(), name:'New Category', videos:[]});
+  renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+});
+
+function openVideoEditor(catId, vidId){
+  const cat = data.categories.find(c=>c.id===catId);
+  let v = vidId ? cat.videos.find(x=>x.id===vidId) : {id:uid(), title:'', desc:'', client:'', software:'', date:'', thumb:'', type:'youtube', url:''};
+  const isNew = !vidId;
+
+  const modal = document.createElement('div');
+  modal.style.cssText='position:fixed;inset:0;z-index:950;background:rgba(4,8,13,.75);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);';
+  modal.innerHTML = `
+    <div style="background:var(--navy-soft);border:1px solid var(--glass-brd);border-radius:16px;max-width:480px;width:100%;max-height:88vh;overflow-y:auto;padding:26px;">
+      <h3 style="font-size:16px;margin-bottom:18px;">${isNew?'Add Video':'Edit Video'}</h3>
+      <div class="field"><label>Title</label><input id="mv_title" value="${escapeAttr(v.title)}"></div>
+      <div class="field"><label>Short Description</label><textarea id="mv_desc" rows="3">${escapeHtml(v.desc)}</textarea></div>
+      <div class="field-row">
+        <div class="field"><label>Client (optional)</label><input id="mv_client" value="${escapeAttr(v.client)}"></div>
+        <div class="field"><label>Date (optional)</label><input id="mv_date" value="${escapeAttr(v.date)}"></div>
+      </div>
+      <div class="field"><label>Software Used</label><input id="mv_software" value="${escapeAttr(v.software)}" placeholder="Premiere Pro, After Effects..."></div>
+      <div class="field"><label>Thumbnail Image</label>
+        <div class="thumb-preview" id="mv_thumb_preview">${v.thumb?`<img src="${v.thumb}">`:'<span class="small-note">No thumbnail</span>'}</div>
+        <input type="file" accept="image/*" id="mv_thumb_file">
+      </div>
+      <div class="field"><label>Video Source</label>
+        <select id="mv_type">
+          <option value="youtube" ${v.type==='youtube'?'selected':''}>YouTube Embed</option>
+          <option value="vimeo" ${v.type==='vimeo'?'selected':''}>Vimeo Embed</option>
+          <option value="url" ${v.type==='url'?'selected':''}>Direct Video URL</option>
+          <option value="upload">Upload from Device</option>
+        </select>
+      </div>
+      <div class="field" id="mv_url_field"><label>Video URL</label><input id="mv_url" value="${escapeAttr(v.url)}" placeholder="https://..."></div>
+      <div class="field" id="mv_upload_field" style="display:none;">
+        <label>Video File</label>
+        <input type="file" accept="video/*" id="mv_video_file">
+        <div class="small-note" id="mv_upload_status">MP4 or MOV, up to 50MB on the free Supabase plan. Bigger files — put them on YouTube or Vimeo instead and use that option.</div>
+      </div>
+      <div class="admin-actions" style="margin-top:14px;">
+        <button class="btn btn-primary btn-sm" id="mv_save">Save Video</button>
+        <button class="btn btn-ghost btn-sm" id="mv_cancel">Cancel</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+  let newThumb = v.thumb;
+  let uploadingVideo = false;
+  function syncSourceFields(){
+    const type = modal.querySelector('#mv_type').value;
+    modal.querySelector('#mv_upload_field').style.display = type==='upload' ? 'block' : 'none';
+    modal.querySelector('#mv_url_field').style.display = type==='upload' ? 'none' : 'block';
+  }
+  modal.querySelector('#mv_type').addEventListener('change', syncSourceFields);
+  syncSourceFields();
+  modal.querySelector('#mv_video_file').addEventListener('change', async (e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    const statusEl = modal.querySelector('#mv_upload_status');
+    if(file.size > 50*1024*1024){
+      statusEl.textContent = 'This file is over 50MB — the free Supabase plan will reject it. Use YouTube/Vimeo for videos this size, or compress it first.';
+      statusEl.style.color = '#ff6b6b';
+      e.target.value = '';
+      return;
+    }
+    try{
+      uploadingVideo = true;
+      statusEl.textContent = 'Uploading video… this can take a bit depending on file size and connection.';
+      statusEl.style.color = '';
+      const path = 'video/'+Date.now()+'-'+Math.random().toString(36).slice(2,8)+'-'+file.name.replace(/[^a-zA-Z0-9.]/g,'_');
+      const { error } = await sb.storage.from('media').upload(path, file, { contentType:file.type||'video/mp4', upsert:false });
+      if(error) throw error;
+      const { data: pub } = sb.storage.from('media').getPublicUrl(path);
+      modal.querySelector('#mv_url').value = pub.publicUrl;
+      statusEl.textContent = 'Uploaded ✓ — '+file.name;
+      statusEl.style.color = '';
+      uploadingVideo = false;
+    }catch(err){
+      console.error(err);
+      statusEl.textContent = 'Upload failed — try again, or use a smaller file.';
+      statusEl.style.color = '#ff6b6b';
+      uploadingVideo = false;
+    }
+  });
+  modal.querySelector('#mv_thumb_file').addEventListener('change', async (e)=>{
+    const file = e.target.files[0]; if(!file) return;
+    try{
+      const { dataUrl, blob } = await compressImage(file, 640, 0.82);
+      modal.querySelector('#mv_thumb_preview').innerHTML = `<img src="${dataUrl}">`; // instant local preview
+      toast('Uploading thumbnail…');
+      newThumb = await uploadMedia(blob, 'thumbnail');
+      toast('Thumbnail uploaded');
+    }catch(err){
+      console.error(err);
+      toast('Could not upload that image');
+    }
+  });
+  modal.querySelector('#mv_cancel').addEventListener('click', ()=> modal.remove());
+  modal.querySelector('#mv_save').addEventListener('click', async ()=>{
+    if(uploadingVideo){ toast('Wait for the video upload to finish first'); return; }
+    v.title = modal.querySelector('#mv_title').value.trim() || 'Untitled Project';
+    v.desc = modal.querySelector('#mv_desc').value.trim();
+    v.client = modal.querySelector('#mv_client').value.trim();
+    v.date = modal.querySelector('#mv_date').value.trim();
+    v.software = modal.querySelector('#mv_software').value.trim();
+    const chosenType = modal.querySelector('#mv_type').value;
+    v.type = chosenType==='upload' ? 'url' : chosenType; // uploaded files play back the same way as a direct URL
+    v.url = modal.querySelector('#mv_url').value.trim();
+    v.thumb = newThumb;
+    if(isNew) cat.videos.push(v);
+    modal.remove();
+    renderCategoryEditor(); await persist(); renderCatTabs(); renderProjectGrid();
+  });
+}
+
+/* --- Social editor --- */
+function renderSocialEditor(){
+  const wrap = document.getElementById('socialEditor');
+  wrap.innerHTML = data.social.map((s,i)=>`
+    <div class="admin-card" data-i="${i}">
+      <div class="field"><label>Kicker Label</label><input class="soc-kicker" value="${escapeAttr(s.kicker)}"></div>
+      <div class="field"><label>Card Title</label><input class="soc-label" value="${escapeAttr(s.label)}"></div>
+      <div class="field"><label>Handle Display</label><input class="soc-handle" value="${escapeAttr(s.handle)}"></div>
+      <div class="field"><label>Link URL</label><input class="soc-url" value="${escapeAttr(s.url)}"></div>
+      <button class="icon-btn danger soc-del">✕ Remove</button>
+    </div>
+  `).join('') + `<button class="btn btn-ghost btn-sm" id="addSocialBtn">+ Add Social Link</button>`;
+  wrap.querySelectorAll('.soc-del').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const i = +btn.closest('.admin-card').dataset.i;
+      data.social.splice(i,1);
+      renderSocialEditor();
+    });
+  });
+  const addBtn = document.getElementById('addSocialBtn');
+  if(addBtn) addBtn.addEventListener('click', ()=>{
+    data.social.push({kicker:'NEW', label:'New Link', handle:'@handle', url:'https://instagram.com/'});
+    renderSocialEditor();
+  });
+}
+document.getElementById('saveSocialBtn').addEventListener('click', async ()=>{
+  document.querySelectorAll('#socialEditor .admin-card').forEach((card,i)=>{
+    data.social[i].kicker = card.querySelector('.soc-kicker').value.trim();
+    data.social[i].label = card.querySelector('.soc-label').value.trim();
+    data.social[i].handle = card.querySelector('.soc-handle').value.trim();
+    data.social[i].url = card.querySelector('.soc-url').value.trim();
+  });
+  renderConnect(); renderContact();
+  await persist();
+});
+
+/* --- Contact save --- */
+document.getElementById('saveContactBtn').addEventListener('click', async ()=>{
+  data.contact.title = document.getElementById('f_contactTitle').value.trim();
+  data.contact.desc = document.getElementById('f_contactDesc').value.trim();
+  data.contact.phone = document.getElementById('f_contactPhone').value.trim();
+  data.contact.email = document.getElementById('f_contactEmail').value.trim();
+  data.contact.whatsapp = document.getElementById('f_contactWhatsapp').value.trim();
+  data.footerText = document.getElementById('f_footerText').value.trim();
+  renderContact();
+  await persist();
+});
+
+function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+/* =========================================================
+   INIT
+========================================================= */
+loadData().then(()=>{
+  startRoleCycler();
+  observeReveals();
+  routeFromHash();
+});
+</script>
+</body>
+</html>
