@@ -194,10 +194,6 @@ body::before{
   transition: color .3s, border-color .3s, transform .5s var(--ease), background .3s;
 }
 .btn-admin:hover{ color: var(--accent); border-color: var(--accent-dim); background: var(--surface-hover); transform: rotate(45deg); }
-.nav-badge{
-  display:inline-flex; align-items:center; justify-content:center; min-width:18px; height:18px; padding:0 5px;
-  margin-left:8px; border-radius:100px; background: var(--accent); color:#04211d; font-size:.68rem; font-weight:700;
-}
 .nav-toggle{ display:none; background:none; border:none; width:32px; height:22px; position:relative; cursor:pointer; }
 .nav-toggle span{ position:absolute; left:0; right:0; height:1px; background: var(--ink); transition: transform .3s var(--ease), opacity .3s; }
 .nav-toggle span:nth-child(1){ top:0; } .nav-toggle span:nth-child(2){ top:50%; transform:translateY(-50%);} .nav-toggle span:nth-child(3){ bottom:0; }
@@ -386,9 +382,9 @@ body::before{
 /* ==========================================================================
    Contact
    ========================================================================== */
-.contact-grid{ display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-lg); align-items:start; }
+.contact-single{ max-width:640px; margin:0 auto; text-align:center; }
+.contact-single .about-text{ margin-left:auto; margin-right:auto; }
 .contact-email{ display:inline-block; margin-top: var(--space-sm); font-family: var(--font-mono); color: var(--accent); font-size:1rem; border-bottom: 1px solid var(--accent-dim); padding-bottom:2px; }
-.contact-form{ display:flex; flex-direction:column; gap: 18px; }
 .form-row{ display:flex; flex-direction:column; gap:8px; }
 .form-row label{ font-size:.78rem; color: var(--ink-muted); font-family: var(--font-mono); letter-spacing:.03em; }
 .form-row input, .form-row textarea, .form-row select{
@@ -460,7 +456,6 @@ body::before{
 .admin-form{ display:flex; flex-direction:column; gap:16px; max-width:520px; }
 .upload-preview{ margin-top:8px; }
 .upload-preview img, .upload-preview video{ max-width:180px; border-radius:8px; }
-.admin-panel-sub{ font-size:.82rem; color: var(--ink-faint); font-family: var(--font-mono); }
 
 /* Segmented toggle (video source / orientation) */
 .segmented{ display:flex; gap:8px; flex-wrap:wrap; }
@@ -471,29 +466,6 @@ body::before{
 }
 .seg-btn:hover{ border-color: var(--border-strong); color: var(--ink); }
 .seg-btn.active{ background: rgba(45,212,191,0.12); border-color: var(--accent-dim); color: var(--accent); }
-
-/* Admin messages */
-.message-row{ padding: 18px 20px; border:1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); }
-.message-row-head{ display:flex; justify-content:space-between; align-items:baseline; gap:12px; margin-bottom:10px; flex-wrap:wrap; }
-.message-row-name{ font-weight:600; margin-right:10px; }
-.message-row-email{ font-size:.82rem; color: var(--accent); font-family: var(--font-mono); }
-.message-row-date{ font-size:.72rem; color: var(--ink-faint); font-family: var(--font-mono); white-space:nowrap; }
-.message-row-body{ color: var(--ink-muted); font-size:.92rem; line-height:1.6; margin-bottom:12px; white-space:pre-wrap; }
-.message-row-fields{ margin-bottom:12px; }
-.message-field{ display:flex; gap:10px; padding:6px 0; font-size:.88rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.message-field:last-child{ border-bottom:none; }
-.message-field-label{ flex:none; min-width:110px; color: var(--ink-faint); font-family: var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; padding-top:2px; }
-.message-field-value{ color: var(--ink-muted); white-space:pre-wrap; }
-.message-row-delete{ background:none; border:1px solid var(--border); border-radius:8px; padding:6px 12px; color: var(--ink-muted); cursor:pointer; font-size:.78rem; transition: color .3s, border-color .3s; }
-.message-row-delete:hover{ color:#f28b82; border-color: rgba(242,139,130,0.4); }
-
-/* Contact form field editor (admin) */
-.field-editor-row{ display:flex; gap:10px; align-items:center; padding:14px 16px; border:1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); margin-bottom:10px; flex-wrap:wrap; }
-.field-label-input{ flex:2; min-width:140px; background: var(--bg-raised); border:1px solid var(--border); border-radius:8px; padding:9px 12px; color: var(--ink); font-family: var(--font-body); font-size:.88rem; }
-.field-type-select{ flex:1; min-width:120px; background: var(--bg-raised); border:1px solid var(--border); border-radius:8px; padding:9px 12px; color: var(--ink); font-family: var(--font-body); font-size:.85rem; }
-.field-required-toggle{ display:flex; align-items:center; gap:6px; font-size:.78rem; color: var(--ink-muted); white-space:nowrap; }
-.field-delete-btn{ background:none; border:1px solid var(--border); border-radius:8px; padding:8px 12px; color: var(--ink-muted); cursor:pointer; font-size:.78rem; transition: color .3s, border-color .3s; }
-.field-delete-btn:hover{ color:#f28b82; border-color: rgba(242,139,130,0.4); }
 
 .modal-root{ position:fixed; inset:0; z-index:2100; background: rgba(6,9,16,0.8); display:flex; align-items:center; justify-content:center; padding:24px; }
 .modal-root[hidden]{ display:none; }
@@ -508,7 +480,6 @@ body::before{
   .mobile-nav.open{ display:flex; }
   .about-grid{ grid-template-columns: 1fr; }
   .about-frame{ max-width:340px; margin:0 auto; }
-  .contact-grid{ grid-template-columns: 1fr; }
   .admin-dashboard{ grid-template-columns: 1fr; }
   .admin-sidebar{ position:sticky; top:0; z-index:5; flex-direction:row; align-items:center; overflow-x:auto; }
   .admin-sidebar nav{ flex-direction:row; }
@@ -654,18 +625,11 @@ body::before{
 
   <!-- Contact -->
   <section class="contact" id="contact">
-    <div class="section-inner contact-grid">
-      <div class="contact-copy reveal">
-        <p class="eyebrow" id="contact-eyebrow">Get in touch</p>
-        <h2 class="section-title" id="contact-title">Have a cut that<br>needs a home?</h2>
-        <p class="about-text" id="contact-text">Tell me about the project — timeline, references, and what "done" looks like. I reply within two business days.</p>
-        <a href="mailto:hello@hamzaedits.com" class="contact-email" id="contact-email-link">hello@hamzaedits.com</a>
-      </div>
-      <form class="contact-form reveal" id="contact-form" novalidate>
-        <div id="contact-fields-container"><!-- injected by app.js from editable field config --></div>
-        <button type="submit" class="btn btn-primary" id="cf-submit">Send message</button>
-        <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
-      </form>
+    <div class="section-inner contact-single reveal">
+      <p class="eyebrow" id="contact-eyebrow">Get in touch</p>
+      <h2 class="section-title" id="contact-title">Have a cut that<br>needs a home?</h2>
+      <p class="about-text" id="contact-text">Tell me about the project — timeline, references, and what "done" looks like. I reply within two business days.</p>
+      <a href="mailto:hello@hamzaedits.com" class="contact-email" id="contact-email-link">hello@hamzaedits.com</a>
     </div>
   </section>
 
@@ -703,7 +667,6 @@ body::before{
       <nav>
         <button class="admin-nav-btn active" data-panel="projects">Projects</button>
         <button class="admin-nav-btn" data-panel="categories">Categories</button>
-        <button class="admin-nav-btn" data-panel="messages">Messages<span class="nav-badge" id="messages-badge" hidden>0</span></button>
         <button class="admin-nav-btn" data-panel="content">Site Content</button>
         <button class="admin-nav-btn" data-panel="contact">Contact</button>
         <button class="admin-nav-btn" data-panel="design">Colors &amp; Fonts</button>
@@ -726,14 +689,6 @@ body::before{
           <button class="btn btn-primary" id="new-category-btn">+ New category</button>
         </div>
         <div class="admin-list" id="admin-category-list"></div>
-      </div>
-
-      <div class="admin-panel" id="panel-messages">
-        <div class="admin-panel-head">
-          <h3>Messages</h3>
-          <span class="admin-panel-sub" id="messages-count"></span>
-        </div>
-        <div class="admin-list" id="admin-message-list"></div>
       </div>
 
       <div class="admin-panel" id="panel-content">
@@ -772,15 +727,6 @@ body::before{
           <button type="submit" class="btn btn-primary">Save contact info</button>
           <p class="form-status" id="contact-content-status" role="status" aria-live="polite"></p>
         </form>
-
-        <div class="admin-panel-head" style="margin-top:44px;">
-          <h3>Form fields</h3>
-          <button type="button" class="btn btn-ghost" id="add-field-btn">+ Add field</button>
-        </div>
-        <p class="admin-panel-sub" style="margin-bottom:16px;display:block;">Add, remove, or relabel the fields shown on your public contact form.</p>
-        <div class="admin-list" id="contact-fields-list"></div>
-        <button type="button" class="btn btn-primary" id="save-fields-btn" style="margin-top:18px;">Save fields</button>
-        <p class="form-status" id="fields-status" role="status" aria-live="polite"></p>
       </div>
 
       <div class="admin-panel" id="panel-design">
@@ -972,11 +918,6 @@ body::before{
     contact_title: "Have a cut that\nneeds a home?",
     contact_text: "Tell me about the project — timeline, references, and what \"done\" looks like. I reply within two business days.",
     contact_email: "hello@hamzaedits.com",
-    contact_fields: [
-      { id: "name", label: "Name", type: "text", required: true },
-      { id: "email", label: "Email", type: "email", required: true },
-      { id: "message", label: "Project details", type: "textarea", required: true },
-    ],
   };
 
   const DEFAULT_SOCIAL = [
@@ -1215,37 +1156,6 @@ body::before{
       }
       return state.session;
     },
-
-    async submitContactMessage(payload) {
-      if (sb) {
-        const { error } = await sb.from("messages").insert(payload);
-        if (error) throw error;
-        return;
-      }
-      const messages = lsGet("kv_messages", []);
-      messages.push({ ...payload, id: uid("msg"), created_at: new Date().toISOString() });
-      lsSet("kv_messages", messages);
-    },
-
-    /** Messages submitted through the public contact form, newest first. */
-    async getMessages() {
-      if (sb) {
-        const { data, error } = await sb.from("messages").select("*").order("created_at", { ascending: false });
-        if (error) throw error;
-        return data;
-      }
-      return [...lsGet("kv_messages", [])].reverse();
-    },
-
-    async deleteMessage(id) {
-      if (sb) {
-        const { error } = await sb.from("messages").delete().eq("id", id);
-        if (error) throw error;
-        return;
-      }
-      const messages = lsGet("kv_messages", []);
-      lsSet("kv_messages", messages.filter((m) => m.id !== id));
-    },
   };
 
   window.DB = DB;
@@ -1367,50 +1277,6 @@ const Components = {
           <button data-action="edit" data-id="${project.id}">Edit</button>
           <button data-action="delete" data-id="${project.id}">Delete</button>
         </span>
-      </div>`;
-  },
-
-  adminMessageRow(msg) {
-    const date = msg.created_at ? new Date(msg.created_at).toLocaleString() : "";
-    const legacyFields = !msg.fields && (msg.name || msg.email || msg.message)
-      ? [msg.name && { label: "Name", value: msg.name }, msg.email && { label: "Email", value: msg.email }, msg.message && { label: "Message", value: msg.message }].filter(Boolean)
-      : null;
-    const fields = msg.fields || legacyFields || [];
-    const name = msg.name || (fields[0] && fields[0].value) || "Message";
-    const email = msg.email || (fields.find((f) => /email/i.test(f.label)) || {}).value || "";
-    const bodyFields = fields
-      .map((f) => `<div class="message-field"><span class="message-field-label">${this.escapeHtml(f.label)}</span><span class="message-field-value">${this.escapeHtml(f.value)}</span></div>`)
-      .join("");
-    return `
-      <div class="message-row" data-id="${msg.id || ""}">
-        <div class="message-row-head">
-          <div>
-            <span class="message-row-name">${this.escapeHtml(name)}</span>
-            ${email ? `<a class="message-row-email" href="mailto:${this.escapeHtml(email)}">${this.escapeHtml(email)}</a>` : ""}
-          </div>
-          <span class="message-row-date">${date}</span>
-        </div>
-        <div class="message-row-fields">${bodyFields}</div>
-        <button class="message-row-delete" data-action="delete-msg" data-id="${msg.id || ""}">Delete</button>
-      </div>`;
-  },
-
-  /** Editable row in the admin "contact form fields" builder */
-  fieldEditorRow(field) {
-    const types = [
-      ["text", "Text"],
-      ["email", "Email"],
-      ["tel", "Phone"],
-      ["number", "Number"],
-      ["textarea", "Long text"],
-    ];
-    const opts = types.map(([value, label]) => `<option value="${value}" ${field.type === value ? "selected" : ""}>${label}</option>`).join("");
-    return `
-      <div class="field-editor-row" data-id="${field.id}">
-        <input class="field-label-input" value="${this.escapeHtml(field.label)}" placeholder="Field label">
-        <select class="field-type-select">${opts}</select>
-        <label class="field-required-toggle"><input type="checkbox" class="field-required-checkbox" ${field.required ? "checked" : ""}> Required</label>
-        <button type="button" class="field-delete-btn" data-action="delete-field">Remove</button>
       </div>`;
   },
 
@@ -1651,8 +1517,6 @@ window.Animations = Animations;
 
     setLogo(c.site_name);
     setText(document.getElementById("footer-brand"), c.site_name);
-
-    renderContactForm();
   }
 
   function renderAboutImage(c) {
@@ -1696,24 +1560,6 @@ window.Animations = Animations;
     const head = trimmed.slice(0, -2);
     const tail = trimmed.slice(-2);
     el.innerHTML = `${Components.escapeHtml(head)}<span>${Components.escapeHtml(tail)}</span>`;
-  }
-
-  /** Builds the public contact form from the admin-editable field list. */
-  function renderContactForm() {
-    const container = document.getElementById("contact-fields-container");
-    if (!container) return;
-    const fields = state.content.contact_fields && state.content.contact_fields.length ? state.content.contact_fields : [];
-    container.innerHTML = fields.map(contactFieldRowHtml).join("");
-  }
-
-  function contactFieldRowHtml(f) {
-    const req = f.required ? "required" : "";
-    const label = Components.escapeHtml(f.label || "Field");
-    if (f.type === "textarea") {
-      return `<div class="form-row"><label for="cf-${f.id}">${label}</label><textarea id="cf-${f.id}" name="${f.id}" rows="4" ${req}></textarea></div>`;
-    }
-    const type = ["text", "email", "tel", "number"].includes(f.type) ? f.type : "text";
-    return `<div class="form-row"><label for="cf-${f.id}">${label}</label><input type="${type}" id="cf-${f.id}" name="${f.id}" ${req}></div>`;
   }
 
   function renderCategories() {
@@ -1833,39 +1679,6 @@ window.Animations = Animations;
       })
     );
 
-    // Contact form (fields are rendered dynamically from the admin-editable config)
-    const form = document.getElementById("contact-form");
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const status = document.getElementById("cf-status");
-      const submitBtn = document.getElementById("cf-submit");
-      const fields = state.content.contact_fields || [];
-      const values = fields.map((f) => {
-        const el = document.getElementById(`cf-${f.id}`);
-        return { label: f.label || "Field", type: f.type, value: el ? el.value.trim() : "" };
-      });
-      const payload = { fields: values };
-      const emailField = values.find((v) => v.type === "email");
-      if (emailField) payload.email = emailField.value;
-      const nameField = values.find((v) => /name/i.test(v.label));
-      if (nameField) payload.name = nameField.value;
-
-      submitBtn.disabled = true;
-      status.textContent = "Sending…";
-      status.className = "form-status";
-      try {
-        await DB.submitContactMessage(payload);
-        status.textContent = "Message sent — thank you. I'll reply within two business days.";
-        status.className = "form-status success";
-        form.reset();
-      } catch (err) {
-        status.textContent = `Something went wrong. Please email ${state.content.contact_email || "me"} directly.`;
-        status.className = "form-status error";
-      } finally {
-        submitBtn.disabled = false;
-      }
-    });
-
     // Admin entry point — both the header gear icon and the footer link open it
     const openAdmin = () => {
       window.location.hash = "admin";
@@ -1979,7 +1792,6 @@ const Admin = (() => {
     $("admin-dashboard").hidden = false;
     renderProjectsPanel();
     renderCategoriesPanel();
-    renderMessagesPanel();
     loadContentForm();
     loadContactPanel();
     loadDesignForm();
@@ -1995,7 +1807,6 @@ const Admin = (() => {
         document.querySelectorAll(".admin-panel").forEach((p) => p.classList.remove("active"));
         btn.classList.add("active");
         $("panel-" + btn.dataset.panel).classList.add("active");
-        if (btn.dataset.panel === "messages") renderMessagesPanel();
       });
     });
   }
@@ -2215,35 +2026,6 @@ const Admin = (() => {
   }
 
   /* ---------------------------------------------------------------- */
-  /* Messages (contact form submissions)                                */
-  /* ---------------------------------------------------------------- */
-  async function renderMessagesPanel() {
-    const list = $("admin-message-list");
-    const messages = await DB.getMessages();
-    list.innerHTML = messages.length
-      ? messages.map((m) => Components.adminMessageRow(m)).join("")
-      : `<p class="empty-state">No messages yet — submissions from the contact form will show up here.</p>`;
-    $("messages-count").textContent = messages.length ? `${messages.length} total` : "";
-    const badge = $("messages-badge");
-    if (messages.length) {
-      badge.hidden = false;
-      badge.textContent = messages.length;
-    } else {
-      badge.hidden = true;
-    }
-  }
-
-  function wireMessagesPanel() {
-    $("admin-message-list").addEventListener("click", async (e) => {
-      const btn = e.target.closest('button[data-action="delete-msg"]');
-      if (!btn) return;
-      if (!confirm("Delete this message?")) return;
-      await DB.deleteMessage(btn.dataset.id);
-      renderMessagesPanel();
-    });
-  }
-
-  /* ---------------------------------------------------------------- */
   /* Site content                                                       */
   /* ---------------------------------------------------------------- */
   async function loadContentForm() {
@@ -2285,21 +2067,13 @@ const Admin = (() => {
   }
 
   /* ---------------------------------------------------------------- */
-  /* Contact section (copy + dynamic form field builder)                */
+  /* Contact section copy (eyebrow / title / text / email)              */
   /* ---------------------------------------------------------------- */
   async function loadContactPanel() {
     const content = await DB.getContent();
     document.querySelectorAll("#contact-content-form [data-field]").forEach((el) => {
       el.value = content[el.dataset.field] || "";
     });
-    renderContactFieldsList(content.contact_fields && content.contact_fields.length ? content.contact_fields : []);
-  }
-
-  function renderContactFieldsList(fields) {
-    const list = $("contact-fields-list");
-    list.innerHTML = fields.length
-      ? fields.map((f) => Components.fieldEditorRow(f)).join("")
-      : `<p class="empty-state">No fields yet — add one below.</p>`;
   }
 
   function wireContactContentForm() {
@@ -2317,43 +2091,6 @@ const Admin = (() => {
         status.className = "form-status success";
       } catch (err) {
         status.textContent = "Could not save.";
-        status.className = "form-status error";
-      }
-    });
-  }
-
-  function wireContactFieldsEditor() {
-    $("add-field-btn").addEventListener("click", () => {
-      const list = $("contact-fields-list");
-      if (list.querySelector(".empty-state")) list.innerHTML = "";
-      list.insertAdjacentHTML(
-        "beforeend",
-        Components.fieldEditorRow({ id: "field-" + Math.random().toString(36).slice(2, 8), label: "", type: "text", required: false })
-      );
-    });
-
-    $("contact-fields-list").addEventListener("click", (e) => {
-      const btn = e.target.closest(".field-delete-btn");
-      if (!btn) return;
-      btn.closest(".field-editor-row").remove();
-    });
-
-    $("save-fields-btn").addEventListener("click", async () => {
-      const rows = [...document.querySelectorAll("#contact-fields-list .field-editor-row")];
-      const fields = rows.map((row) => ({
-        id: row.dataset.id,
-        label: row.querySelector(".field-label-input").value.trim() || "Field",
-        type: row.querySelector(".field-type-select").value,
-        required: row.querySelector(".field-required-checkbox").checked,
-      }));
-      const status = $("fields-status");
-      try {
-        await DB.saveContent({ contact_fields: fields });
-        await window.PublicSite.refresh();
-        status.textContent = "Form fields saved.";
-        status.className = "form-status success";
-      } catch (err) {
-        status.textContent = "Could not save fields.";
         status.className = "form-status error";
       }
     });
@@ -2431,9 +2168,7 @@ const Admin = (() => {
       wireContentForm();
       wireAboutImageUpload();
       wireContactContentForm();
-      wireContactFieldsEditor();
       wireDesignForm();
-      wireMessagesPanel();
     }
     checkSession();
   }
